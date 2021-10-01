@@ -6,7 +6,7 @@ rom:write(0x25E2C, ldr)
 rom:write(0x2800000, old_ldr)
 
 local payload = gru.blob_load("fp.bin")
-rom:write(0x2800084, payload)
+rom:write(0x2800060, payload)
 
 local hooks = gru.gsc_load("hooks.gsc")
 hooks:shift(-0x80024C00)

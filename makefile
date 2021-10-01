@@ -21,7 +21,7 @@ FP_VERSIONS = PM64J PM64U
 NAME        = fp
 NDEBUG     ?= 0
 
-ADDRESS     = 0x80400040
+ADDRESS     = 0x80400060
 ADDRESS_LDR	= 0x8004AA2C
 CFLAGS      = -c -MMD -MP -std=gnu11 -Wall -ffunction-sections -fdata-sections -O1 -fno-reorder-blocks 
 CPPFLAGS    = -DPACKAGE=$(PACKAGE) -DURL=$(URL) -DF3DEX_GBI_2
