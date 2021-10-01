@@ -9,6 +9,7 @@ local payload = gru.blob_load("fp.bin")
 rom:write(0x2800084, payload)
 
 local hooks = gru.gsc_load("hooks.gsc")
+hooks:shift(-0x80024C00)
 hooks:apply_be(rom)
 
 rom:crc_update()
