@@ -36,4 +36,3 @@ genhook()
 }
 
 genhook "$sym_pm_main_game_hook" "jal $sym_pm_fp_hook;"
-genhook "0x80400040" "jr $ra;"

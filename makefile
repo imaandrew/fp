@@ -92,8 +92,8 @@ $$(OUTDIR-$(1))   :
 	mkdir -p $$@
 endef
 
-#$(foreach v,$(FP_VERSIONS),$(eval $(call bin_template,fp-$(v),$(v),fp,$(ADDRESS),src,res/fp)))
-$(foreach v,$(FP_VERSIONS),$(eval $(call bin_template,ldr-fp-$(v),$(v),ldr,$(ADDRESS_LDR),ldr,ldr/res)))
+$(foreach v,$(FP_VERSIONS),$(eval $(call bin_template,fp-$(v),$(v),fp,$(ADDRESS),src,res/fp)))
+#$(foreach v,$(FP_VERSIONS),$(eval $(call bin_template,ldr-fp-$(v),$(v),ldr,$(ADDRESS_LDR),ldr,ldr/res)))
 
 $(FP-PM64U)	:	LDFLAGS	+=	-Wl,-Map=bin/PM64U/fp-u.map
 $(FP-PM64J)	:	LDFLAGS	+=	-Wl,-Map=bin/PM64J/fp-j.map
