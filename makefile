@@ -20,7 +20,7 @@ LIBDIR         = lib
 RESDIR         = res
 CFILES         = *.c
 SFILES         = *.s
-FP_VERSIONS    = JP US
+FP_VERSIONS    = JP US PAL
 NAME           = fp
 NDEBUG        ?= 0
 
@@ -38,9 +38,10 @@ endif
 FP_ALL      = $(foreach v,$(FP_VERSIONS),fp-$(v))
 LDR         = $(foreach v,$(FP_VERSIONS),ldr-fp-$(v))
 
-FP-ALL      = $(FP-JP) $(FP-US)
+FP-ALL      = $(FP-JP) $(FP-US) $(FP-PAL)
 FP-JP       = $(OBJ-fp-JP) $(ELF-fp-JP) $(HOOKS-fp-JP)
 FP-US       = $(OBJ-fp-US) $(ELF-fp-US) $(HOOKS-fp-US)
+FP-PAL       = $(OBJ-fp-PAL) $(ELF-fp-PAL) $(HOOKS-fp-PAL)
 
 all         : $(FP_ALL)
 clean       :
@@ -93,6 +94,8 @@ $(foreach v,$(FP_VERSIONS),$(eval $(call bin_template,ldr-fp-$(v),$(v),ldr,src/a
 
 $(FP-US)	:	ALL_LDFLAGS	+=	-Wl,-Map=$(BUILDDIR)/fp-us.map -Wl,--defsym,start=$(FP_BIN_ADDRESS)
 $(FP-JP)	:	ALL_LDFLAGS	+=	-Wl,-Map=$(BUILDDIR)/fp-jp.map -Wl,--defsym,start=$(FP_BIN_ADDRESS)
+$(FP-PAL)	:	ALL_LDFLAGS	+=	-Wl,-Map=$(BUILDDIR)/fp-pal.map -Wl,--defsym,start=$(FP_BIN_ADDRESS)
 
 $(FP-US)	:	LIBS	:=	-lpm-us
 $(FP-JP)	:	LIBS	:=	-lpm-jp
+$(FP-PAL)	:	LIBS	:=	-lpm-pal

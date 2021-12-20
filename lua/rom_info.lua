@@ -12,5 +12,12 @@ roms = {
         ldr_addr = 0x8004AD7C,
         dma_func = 0x8002973C,
         rom_id = "US",
+    },
+    [0x85B3AB37] = {
+        rom_to_ram = 0x80024C00,
+        ldr_rom = 0x2675C,
+        ldr_addr = 0x8004B35C,
+        dma_func = 0x800296BC,
+        rom_id = "PAL",
     }
 }
