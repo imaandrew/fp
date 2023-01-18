@@ -1,15 +1,10 @@
-URL           ?= github.com/jcog/fp
+URL           ?= github.com/imaandrew/fp
 ifeq ($(origin FP_VERSION), undefined)
   TAG_COMMIT    := $(shell git rev-list --abbrev-commit --tags --max-count=1)
   TAG           := $(shell git describe --abbrev=0 --tags ${TAG_COMMIT} 2>/dev/null || true)
   COMMIT 	    := $(shell git rev-parse --short HEAD)
   DATE          := $(shell git log -1 --format=%cd --date=format:"%m-%d-%y")
-  FP_VERSION := $(COMMIT)-$(DATE)
-  ifeq ('$(TAG_COMMIT)', '$(COMMIT)')
-    ifneq ('$(TAG)', '')
-      FP_VERSION := $(TAG)
-    endif
-  endif
+  FP_VERSION := v2.0
 endif
 CC             = mips64-gcc
 LD             = mips64-g++

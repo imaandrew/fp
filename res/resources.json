@@ -176,7 +176,7 @@
   {
     "type":         "texture",
     "name":         "control_stick",
-    "format":       "i4",
+    "format":       "rgba16",
     "tile_height":  48
   }
 }

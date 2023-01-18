@@ -210,6 +210,8 @@ struct menu_item *menu_add_positioning(struct menu *menu, s32 x, s32 y, menu_gen
                                        void *callback_data);
 struct menu_item *menu_add_checkbox(struct menu *menu, s32 x, s32 y, menu_generic_callback callback_proc,
                                     void *callback_data);
+struct menu_item *menu_add_checkbox_enabled(struct menu *menu, s32 x, s32 y, menu_generic_callback callback_proc,
+                                    void *callback_data);
 _Bool menu_checkbox_get(struct menu_item *item);
 void menu_checkbox_set(struct menu_item *item, _Bool state);
 

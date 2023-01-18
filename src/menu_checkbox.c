@@ -81,6 +81,22 @@ struct menu_item *menu_add_checkbox(struct menu *menu, s32 x, s32 y, menu_generi
     return item;
 }
 
+struct menu_item *menu_add_checkbox_enabled(struct menu *menu, s32 x, s32 y, menu_generic_callback callback_proc,
+                                    void *callback_data) {
+    struct item_data *data = malloc(sizeof(*data));
+    data->callback_proc = callback_proc;
+    data->callback_data = callback_data;
+    data->anim_state = 1;
+    data->state = 1;
+    struct menu_item *item = menu_item_add(menu, x, y, NULL, 0xFFFFFF);
+    item->data = data;
+    item->enter_proc = enter_proc;
+    item->think_proc = think_proc;
+    item->draw_proc = draw_proc;
+    item->activate_proc = activate_proc;
+    return item;
+}
+
 _Bool menu_checkbox_get(struct menu_item *item) {
     struct item_data *data = item->data;
     return data->state;

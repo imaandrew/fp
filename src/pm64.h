@@ -28,6 +28,8 @@ typedef double f64;
 #define ITEM_ICONS_ROM_START 0x1D4720
 #endif
 
+typedef s32 Bytecode;
+
 typedef enum {
     HUD_ELEMENT_OP_End,
     HUD_ELEMENT_OP_SetRGBA,
@@ -995,6 +997,65 @@ typedef struct StaticItem {
     /* 0x1D */ char unk_1D[3];
 } StaticItem; // size = 0x20
 
+typedef struct Npc {
+    /* 0x000 */ s32 flags;
+    /* 0x004 */ void (*onUpdate)(struct Npc*); ///< Run before anything else for this NPC in update_npcs()
+    /* 0x008 */ void (*onRender)(struct Npc*); ///< Run after the display list for this NPC is built
+    /* 0x00C */ f32 yaw;
+    /* 0x010 */ f32 planarFlyDist; /* also used for speech, temp0? */
+    /* 0x014 */ f32 jumpScale; /* also used for speech, temp1? */
+    /* 0x018 */ f32 moveSpeed;
+    /* 0x01C */ f32 jumpVelocity;
+    /* 0x020 */ void* blurBuf; ///< Null unless flag 0x100000 is set.
+    /* 0x024 */ s32 spriteInstanceID;
+    /* 0x028 */ union {
+    /*       */     u16 h;
+    /*       */     u32 w;
+    /*       */ } currentAnim;
+    /* 0x02C */ s32 unk_2C;
+    /* 0x030 */ f32 animationSpeed;
+    /* 0x034 */ f32 renderYaw;
+    /* 0x038 */ vec3f_t pos;
+    /* 0x044 */ vec3f_t rotation;
+    /* 0x050 */ f32 rotationVerticalPivotOffset;
+    /* 0x054 */ vec3f_t scale;
+    /* 0x060 */ vec3f_t moveToPos;
+    /* 0x06C */ vec3f_t colliderPos; /* used during collision with player */
+    /* 0x078 */ s32 shadowIndex;
+    /* 0x07C */ f32 shadowScale;
+    /* 0x080 */ s32 collisionChannel; /* flags used with collision tracing */
+    /* 0x084 */ s16 currentFloor; /* colliderID */
+    /* 0x086 */ s16 currentWall; /* colliderID */
+    /* 0x088 */ s16 isFacingAway;
+    /* 0x08A */ s16 yawCamOffset;
+    /* 0x08C */ s16 turnAroundYawAdjustment;
+    /* 0x08E */ s16 duration; // TODO: name less vaguely
+    /* 0x090 */ vec3s_t homePos;
+    /* 0x096 */ s16 unk_96;
+    /* 0x098 */ s16 unk_98;
+    /* 0x09A */ s16 unk_9A;
+    /* 0x09C */ s16 unk_9C;
+    /* 0x09E */ s16 unk_9E;
+    /* 0x0A0 */ s16 unk_A0;
+    /* 0x0A2 */ u16 unk_A2;
+    /* 0x0A4 */ s8 npcID;
+} Npc; // size = 0x340
+
+typedef Npc* NpcList[64];
+
+typedef struct Evt {
+    /* 0x000 */ u8 state;
+    /* 0x001 */ u8 currentArgc;
+    /* 0x002 */ u8 currentOpcode;
+    /* 0x003 */ u8 priority;
+    /* 0x004 */ u8 groupFlags;
+    /* 0x005 */ s8 blocked; /* 1 = blocking */
+    /* 0x006 */ s8 loopDepth; /* how many nested loops we are in, >= 8 hangs forever */
+    /* 0x007 */ s8 switchDepth; /* how many nested switches we are in, max = 8 */
+    /* 0x008 */ Bytecode* ptrNextLine;
+    /* 0x00C */ Bytecode* ptrReadPos;
+} Evt; // size = 0x168
+
 typedef __OSEventState __osEventStateTab_t[];
 typedef void *(*PrintCallback)(void *, const char *, u32);
 
@@ -1023,6 +1084,7 @@ extern_data script_list_ctxt_t pm_curr_script_lst;
 extern_data encounter_status_ctxt_t pm_encounter_status;
 extern_data Camera pm_gCameras[4];
 extern_data s32 pm_gCurrentCameraID;
+extern_data NpcList gWorldNpcList;
 
 extern_data u16 *nuGfxCfb_ptr;
 extern_data u32 osMemSize;
@@ -1072,6 +1134,8 @@ void step_game_loop(void);
 void pm_disable_player_input(void);
 void update_camera_mode_6(Camera *camera);
 void update_player_input(void);
+s32 evt_get_variable(Evt* script, Bytecode var);
+s32 get_map_IDs_by_name(const char* mapName, s16* areaID, s16* mapID);
 
 /* Convenience Values */
 #define STORY_PROGRESS pm_save_data.global_bytes[0]

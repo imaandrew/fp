@@ -120,6 +120,17 @@ static s32 anchor_button_activate_proc(struct menu_item *item) {
     return 1;
 }
 
+void do_thing(struct menu_item *item) {
+    struct member_data *member_data = item->data;
+    if (member_data->anchored) {
+        release_member(member_data);
+    } else {
+        anchor_member(member_data);
+    }
+    member_data->anchor_anim_state = 1;
+    return;
+}
+
 static void edit_watch_in_memory_proc(struct menu_item *item, void *data) {
     struct member_data *member_data = data;
     struct menu_item *watch = menu_userwatch_watch(member_data->userwatch);
@@ -314,7 +325,7 @@ struct menu_item *watchlist_create(struct menu *menu, struct menu *menu_release,
 s32 watchlist_add(struct menu_item *item, u32 address, enum watch_type type) {
     struct item_data *list = item->data;
     s32 pos = list->members.size;
-    if (add_member(list, address, type, pos, 1, 0, 0, 0)) {
+    if (add_member(list, address, type, pos, 1, 13, 0, 0)) {
         return pos;
     } else {
         return -1;

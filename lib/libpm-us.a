@@ -65,6 +65,9 @@ pm_ActionCommandStatus = 0x8029FBE0;
 pm_func_802A472C = 0x802A472C;
 pm_curr_script_lst = 0x802DA890;
 pm_SaveGame = 0x802E11A0;
+gWorldNpcList = 0x800A0990;
+evt_get_variable = 0x802C7ABC;
+get_map_IDs_by_name = 0x8005ABF8;
 
 update_hook = 0x8002611C;
 step_game_loop = 0x80026740;

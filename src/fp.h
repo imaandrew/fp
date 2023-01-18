@@ -92,6 +92,18 @@ typedef struct {
     vec3f_t cam_pos;
     controller_t input_mask;
     _Bool cam_enabled_before;
+    _Bool heap_rando;
+    _Bool lz_rando;
+    _Bool moan_mode;
+    _Bool dump_rom;
+    u32 rom_addr;
+    u32 rom_value;
+    u16 frames_to_move_camera;
+    vec3f_t cam_offset;
+    u16 ugh;
+    _Bool yepcock;
+    f32 peecock;
+    f32 poopcock;
 } fp_ctxt_t;
 
 extern fp_ctxt_t fp;
@@ -114,6 +126,13 @@ struct menu *create_practice_menu();
 struct menu *create_debug_menu();
 struct menu *create_settings_menu();
 struct menu *create_camera_menu();
+struct menu *create_fun_menu();
+
+u16 get_rand_area();
+
+u16 get_rand_map(u16 area);
+
+u16 get_rand_entrance(u16 area, u16 map);
 
 #ifdef NDEBUG
 #define PRINTF(...) ((void)0)

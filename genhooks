@@ -40,3 +40,33 @@ genhook "$sym_draw_hook" "jal $sym_fp_draw_entry;"
 genhook "$sym_after_draw_hook" "jal $sym_fp_after_draw_entry;"
 genhook "$sym_update_camera_mode_6_hook" "jal $sym_fp_update_camera_mode_6;"
 genhook "$sym_update_player_input_rom_hook" "jal $sym_fp_update_input;"
+echo "81104DCC 2404"
+echo "81104DCE 2073"
+echo "81097F90 5249"
+echo "81097F92 5020"
+echo "81097F94 424F"
+echo "81097F96 5A4F" 
+echo "81097F98 204C" 
+echo "81097F9A 4C4C"
+echo "81097F9C 4C4C"
+echo "81097F9E 4C4C"
+echo "81097FA0 4C4C"
+echo "81097FA2 4C4C"
+echo "81097FA4 4C00"
+echo "8109810D 5241"
+echo "8109810F 5449"
+echo "80098111 004F"
+echo 81190C38 2907
+echo 81190C3A 4C4C
+echo 81190C3C F748
+echo 81190C3E 4156
+echo 81190C40 45F7
+echo 81190C42 5548
+echo 81190C44 4848
+echo 81190C46 4848
+echo 81190C48 4848
+echo 81190C4A 4848
+echo 80190C4C 0048
+genhook "0x801139B8" "jal $sym_fp_goto_map;"
+genhook "0x801139D8" "jal $sym_fp_goto_map;"
+genhook "0x801139F8" "jal $sym_fp_goto_map;"

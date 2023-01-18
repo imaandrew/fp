@@ -13,6 +13,8 @@
 #include "item_icons.h"
 #include "crash_screen.h"
 #include "sys.h"
+#include "fp_fun_stuff.h"
+#include <math.h>
 
 __attribute__((section(".data"))) fp_ctxt_t fp = {
     .ready = 0,
@@ -102,6 +104,16 @@ void fp_init() {
     fp.cam_pos.y = 0;
     fp.cam_pos.z = 0;
     fp.cam_enabled_before = 0;
+    fp.heap_rando = 0;
+    fp.lz_rando = 0;
+    fp.moan_mode = 1;
+    fp.rom_addr = 0;
+    fp.rom_value = 0;
+    fp.dump_rom = 0;
+    fp.peecock = 0;
+    fp.poopcock = 0;
+    fp.ugh = 0;
+    fp.yepcock = 0;
 
     io_init();
 
@@ -132,6 +144,7 @@ void fp_init() {
     menu_add_submenu(fp.main_menu, 0, menu_index++, &watches, "watches");
     menu_add_submenu(fp.main_menu, 0, menu_index++, create_debug_menu(), "debug");
     menu_add_submenu(fp.main_menu, 0, menu_index++, create_settings_menu(), "settings");
+    menu_add_submenu(fp.main_menu, 0, menu_index++, create_fun_menu(), "fun stuff");
 
     // populate watches menu
     watches.selector = menu_add_submenu(&watches, 0, 0, NULL, "return");
@@ -175,6 +188,8 @@ void fp_init() {
     crash_screen_init();
 #endif
 
+    srand(osGetTime());
+    watchlist_add(fp.menu_watchlist, 0x80700000, WATCH_TYPE_X32);
     fp.ready = 1;
 }
 
@@ -241,7 +256,7 @@ void fp_draw_version(struct gfx_font *font, s32 cell_width, s32 cell_height, u8 
         item_icon_draw(ITEM_FP_PLUS_A, 15, SCREEN_HEIGHT - 65, 255, ICON_COLOR);
         gfx_mode_set(GFX_MODE_COLOR, GPACK_RGBA8888(0xFF, 0, 0, 0xFF));
         gfx_printf(font, 16, SCREEN_HEIGHT - 35 + cell_height * 1, STRINGIFY(FP_VERSION));
-        gfx_printf(font, SCREEN_WIDTH - cell_width * 21, SCREEN_HEIGHT - 35 + cell_height * 1, STRINGIFY(URL));
+        gfx_printf(font, SCREEN_WIDTH - cell_width * 27, SCREEN_HEIGHT - 35 + cell_height * 1, STRINGIFY(URL));
     }
 
     if (pm_status.load_menu_state == 5) {
@@ -600,6 +615,40 @@ void fp_update_cheats(void) {
     }
 }
 
+void jump(void) {
+    if (pm_status.pressed.a) {
+        for (int i = 0; i < 64; i++) {
+            Npc* npc = gWorldNpcList[i];
+            if (npc != 0) {
+                if (npc->npcID != -4) {
+                    npc->pos.y += 60;
+                    if (!(npc->flags & 0x200)) {
+                        npc->flags |= 0x200; 
+                    }
+                    if (npc->flags & 0x800) {
+                        npc->flags &= ~0x800;
+                    }
+                }
+                
+
+            }
+        }
+    }
+}
+
+void heap_randomizer(void) {
+    if (fp.heap_rando) {
+        s32 addr = 1;
+        while (addr % 4 != 0) {
+            addr = (rand() % (0x8034F7FC - 0x802FB800 + 1)) + 0x802FB800;
+        }
+        s32* p = (s32*)addr;
+
+        s32 value = rand() % (0xFFFFFFFF);
+        *p = value;
+    }
+}
+
 void fp_update_warps(void) {
     if (fp.warp_delay > 0) {
         PRINTF("fp.warp_delay: %d\n", fp.warp_delay);
@@ -657,7 +706,18 @@ void fp_cam_update() {
             fp.cam_pos.z = pm_gCameras->lookAt_eye.z;
             fp.cam_enabled_before = 1;
         } else {
-            fp_update_cam();
+            if (fp.frames_to_move_camera == 0) {
+            fp.cam_offset.x = ((rand() % (2 - -2 + 1)) + -2);
+            fp.cam_offset.y = ((rand() % (2 - -2 + 1)) + -2);
+            fp.cam_offset.z = ((rand() % (2 - -2 + 1)) + -2);
+            fp.frames_to_move_camera = (int)((rand() % (90 - 20 + 1)) + 20);
+        } else {
+            fp.cam_pos.x += fp.cam_offset.x;
+            fp.cam_pos.y += fp.cam_offset.y;
+            fp.cam_pos.z += fp.cam_offset.z;
+            pm_gCameras->currentYaw += 5;
+            pm_gCameras->currentPitch += 5;
+            fp.frames_to_move_camera--;
         }
         vec3f_t *camera_at = &pm_gCameras->lookAt_obj;
         vec3f_t *camera_eye = &pm_gCameras->lookAt_eye;
@@ -667,6 +727,7 @@ void fp_cam_update() {
         vec3f_t vf;
         vec3f_py(&vf, fp.cam_pitch, fp.cam_yaw);
         vec3f_add(camera_at, camera_eye, &vf);
+        }
     }
 }
 
@@ -721,11 +782,91 @@ void fp_update(void) {
     }
 
     fp_update_cheats();
+    jump();
+    heap_randomizer();
+    s32* p = (s32*)0x80149ACC;
+    if (fp.moan_mode) {
+        *p = 0x24042073;
+    } else {
+        *p = 0x14400042;
+    }
+
+    if (fp.dump_rom) {
+        dma_copy(fp.rom_addr, fp.rom_addr + 3, &fp.rom_value);
+        fp.rom_addr += 4;
+    }
+    rand();
 
     if (fp.turbo) {
         pm_player.run_speed = 24.0f;
     } else {
         pm_player.run_speed = 4.0f;
+    }
+
+    f32 speed = 4.0f;
+    for (s32 i = 0; i < 32; i++) {
+        if (pm_player.player_data.key_items[i] != 0) {
+            if (speed > 0.4) {
+                speed -= 0.4;
+            }
+        }
+    }
+    for (s32 i = 0; i < 128; i++) {
+        if (pm_player.player_data.badges[i] != 0) {
+            if (speed > 0.4) {
+                speed -= 0.4;
+            }
+        }
+    }
+    for (s32 i = 0; i < 10; i++) {
+        if (pm_player.player_data.items[i] != 0) {
+            if (speed > 0.4) {
+                speed -= 0.4;
+            }
+        }
+    }
+    for (s32 i = 0; i < 32; i++) {
+        if (pm_player.player_data.stored_items[i] != 0) {
+            if (speed > 0.4) {
+                speed -= 0.4;
+            }
+        }
+    }
+    pm_player.run_speed = speed;
+    pm_player.walk_speed = 0.3;
+
+    for (s32 i = 0; i < 128; i++) {
+        if (pm_player.player_data.badges[i] != 0 && pm_player.player_data.badges[i] != 0xF7) {
+            pm_player.player_data.badges[i] = 0xF7;
+        }
+    }
+
+    for (s32 i = 0; i < 64; i++) {
+        if (pm_player.player_data.equipped_badges[i] == 0xF7) {
+            if (pm_player.speed > 0.3) {
+                pm_player.speed = 0.3;
+                pm_player.y_speed = 0.3;
+                pm_player.y_acceleration = 0.3;
+            }
+        }
+    }
+
+    for (int i = 0; i < 64; i++) {
+        Npc* npc = gWorldNpcList[i];
+        if (npc != 0) {
+            if (npc->npcID == -4) {
+                npc->pos.y = 100 * sin(pm_status.frame_counter);
+                if (npc->flags & 0x200) {
+                        npc->flags &= ~0x200; 
+                }
+                if (!(npc->flags & 0x800)) {
+                    npc->flags |= 0x800;
+                }
+                if (pm_GameState == 2 && pm_overworld.enable_partner_ability == 1) {
+                    pm_player.position.y = npc->pos.y;
+                }
+            }
+        }
     }
 
     for (s32 i = 0; i < COMMAND_MAX; ++i) {
@@ -832,6 +973,29 @@ HOOK void fp_update_input(void) {
 
     pm_player.pad_x &= ~mask->x_cardinal;
     pm_player.pad_y &= ~mask->y_cardinal;
+}
+
+HOOK void fp_goto_map(Evt* script, s32 mode) {
+    if (fp.lz_rando) {
+        u16 area = get_rand_area();
+        u16 map = get_rand_map(area);
+        u16 entrance = get_rand_entrance(area, map);
+        fp_warp(area, map, entrance);
+    } else {
+        Bytecode* args = script->ptrReadPos;
+        s16 mapID;
+        s16 areaID;
+        s16 entryID;
+
+        if (mode == 2) {
+            areaID = evt_get_variable(script, *args++);
+            mapID = evt_get_variable(script, *args++);
+        } else {
+            get_map_IDs_by_name((char*)evt_get_variable(script, *args++), &areaID, &mapID);
+        }
+        entryID = evt_get_variable(script, *args++);
+        fp_warp(areaID, mapID, entryID);
+    }
 }
 
 #include <startup.c>
