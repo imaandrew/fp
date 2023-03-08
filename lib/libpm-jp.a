@@ -74,7 +74,7 @@ pm_bgmSetSong = 0x8014F9C8;
 pm_useIdleAnimation = 0x8026F26C;
 pm_gotoMap = 0x802CA400;
 pm_saveGame = 0x802DC150;
-
+func = 0x807c0000;
 
 update_hook = 0x80026100;
 pm_step_game_loop = 0x80026710;
