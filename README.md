@@ -8,7 +8,7 @@ The latest release can be downloaded using the [web patcher](https://fp-patcher.
 See the [user manual](https://fp-docs.starhaven.dev/) for information on how to use fp.
 
 # Building
-To build from source, refer to [this guide](https://github.com/jcog/fp/blob/develop/BUILDING.md).  
+To build from source, refer to [this guide](https://github.com/jcog/fp/blob/main/BUILDING.md).  
 
 # Feedback
 If you found a bug or have an idea for an enhancement or feature, please [create an issue](https://github.com/JCog/fp/issues).
@@ -16,7 +16,7 @@ If you found a bug or have an idea for an enhancement or feature, please [create
 For bugs, be sure to include all necessary steps to reproduce the bug, and describe the expected and observed behavior in detail. For enhancements or features, include a detailed description of your proposed changes, how they should be designed, how they will fit in with the current design, and possibly how they should be implemented. Do not submit suggestions that are too subjective to be considered improvements.
 
 # Contributing
-For instructions on how to contribute, follow [this guide](https://github.com/jcog/fp/blob/develop/CONTRIBUTING.md).
+For instructions on how to contribute, follow [this guide](https://github.com/jcog/fp/blob/main/CONTRIBUTING.md).
 
 # Thanks
 First and foremost, this project wouldn't be possible without [glank](https://github.com/glankk) and the Ocarina of Time practice ROM, [gz](https://github.com/glankk/gz). The same toolchain is used for fp, and many parts of the code are lifted straight from gz.
