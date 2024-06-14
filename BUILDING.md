@@ -13,13 +13,13 @@ For those on other operating systems or who want to build from source, follow th
 
 
 # Building
+Clone the fp source code by running:
+
+`git clone --recursive https://github.com/jcog/fp.git`
+
 Install required modules by running:
 
 `pip install -r requirements.txt`
-
-Clone the fp source code by running:
-
-`git clone --recursive https://github.com/jcog/fp.git`  
 
 To build fp binaries, run `./configure.py` and then `ninja ver` with `ver` being either `us` or `jp`. This will only build the fp binaries and will not patch a rom.
 If you want to patch a rom, you can skip this step and move on to the patching section.
