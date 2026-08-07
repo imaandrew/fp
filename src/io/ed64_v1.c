@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ed64_io.h"
 #include "ed64_l.h"
 #include "iodev.h"
 #include "pi.h"

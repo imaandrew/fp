@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-const char *strItemNames[] = {
+static const char *strItemNames[] = {
     "empty",
     "Jump",
     "Spin Jump",

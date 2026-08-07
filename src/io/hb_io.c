@@ -1,3 +1,4 @@
+#include "hb_io.h"
 #include "hb.h"
 #include "iodev.h"
 #include <mips.h>

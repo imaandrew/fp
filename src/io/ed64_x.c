@@ -1,5 +1,6 @@
 #include "ed64_x.h"
 #include "common.h"
+#include "ed64_io.h"
 #include "iodev.h"
 #include "pi.h"
 #include "sd_host.h"

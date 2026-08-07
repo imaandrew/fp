@@ -1,3 +1,4 @@
+#include "watchlist.h"
 #include "adex.h"
 #include "fp.h"
 #include "fp/debug/mem.h"

@@ -1,4 +1,5 @@
 #ifndef HB_H
+#define HB_H
 #include "common.h"
 
 #define hb_regs               (*(volatile HbRegs *)0xA8050000) // NOLINT

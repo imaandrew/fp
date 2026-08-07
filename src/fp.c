@@ -48,7 +48,7 @@ static void mainReturnProc(struct MenuItem *item, void *data) {
     hideMenu();
 }
 
-void fpInit(void) {
+static void fpInit(void) {
     clear_bss();
     do_global_ctors();
 
@@ -130,7 +130,7 @@ void fpInit(void) {
     fp.ready = TRUE;
 }
 
-void fpUpdateMenu(void) {
+static void fpUpdateMenu(void) {
     if (inputBindPressedRaw(COMMAND_MENU)) {
         hideMenu();
     } else if (inputBindPressed(COMMAND_RETURN)) {
@@ -160,7 +160,7 @@ static void fpUpdateCpuCounter(void) {
     count = newCount;
 }
 
-void fpEmergencySettingsReset(u16 padPressed) {
+static void fpEmergencySettingsReset(u16 padPressed) {
     if (padPressed) {
         static const u16 inputList[] = {
             BUTTON_D_UP,    BUTTON_D_UP,   BUTTON_D_DOWN,  BUTTON_D_DOWN, BUTTON_D_LEFT,
@@ -182,7 +182,7 @@ void fpEmergencySettingsReset(u16 padPressed) {
     }
 }
 
-void fpDrawVersion(struct GfxFont *font, s32 cellWidth, s32 cellHeight, u8 menuAlpha) {
+static void fpDrawVersion(struct GfxFont *font, s32 cellWidth, s32 cellHeight, u8 menuAlpha) {
     static struct GfxTexture *fpIconTex;
     if (pm_gGameStatus.introState == 5) {
         fp.versionShown = TRUE;
@@ -204,7 +204,7 @@ void fpDrawVersion(struct GfxFont *font, s32 cellWidth, s32 cellHeight, u8 menuA
     }
 }
 
-void fpDrawInputDisplay(struct GfxFont *font, s32 cellWidth, s32 cellHeight, u8 menuAlpha) {
+static void fpDrawInputDisplay(struct GfxFont *font, s32 cellWidth, s32 cellHeight, u8 menuAlpha) {
     u16 dPad = inputPad().buttons;
     s8 dX = inputX();
     s8 dY = inputY();
@@ -276,7 +276,7 @@ void fpDrawInputDisplay(struct GfxFont *font, s32 cellWidth, s32 cellHeight, u8 
     }
 }
 
-void fpDrawTimer(struct GfxFont *font, s32 cellWidth, s32 cellHeight, u8 menuAlpha) {
+static void fpDrawTimer(struct GfxFont *font, s32 cellWidth, s32 cellHeight, u8 menuAlpha) {
     s32 hundredths = timerCount * 100 / fp.cpuCounterFreq;
     s32 seconds = hundredths / 100;
     s32 minutes = seconds / 60;
@@ -304,7 +304,7 @@ void fpDrawTimer(struct GfxFont *font, s32 cellWidth, s32 cellHeight, u8 menuAlp
     }
 }
 
-void fpUpdateCheats(void) {
+static void fpUpdateCheats(void) {
     pm_gGameStatus.debugEnemyContact = settings->cheatEnemyContact;
     if (CHEAT_ACTIVE(CHEAT_HP)) {
         pm_gPlayerData.curHP = pm_gPlayerData.curMaxHP;
@@ -356,7 +356,7 @@ void fpUpdateCheats(void) {
     pm_gGameStatus.debugQuizmo = CHEAT_ACTIVE(CHEAT_QUIZMO) != 0;
 }
 
-void fpUpdateWarps(void) {
+static void fpUpdateWarps(void) {
     if (fp.warpDelay > 0) {
         PRINTF("fp.warp_delay: %d\n", fp.warpDelay);
         fp.warpDelay--;
@@ -373,7 +373,7 @@ void fpUpdateWarps(void) {
     }
 }
 
-void fpDrawLog(struct GfxFont *font, s32 cellWidth, s32 cellHeight, u8 menuAlpha) {
+static void fpDrawLog(struct GfxFont *font, s32 cellWidth, s32 cellHeight, u8 menuAlpha) {
     for (s32 i = SETTINGS_LOG_MAX - 1; i >= 0; --i) {
         const s32 fadeBegin = 30;
         const s32 fadeDuration = 20;
@@ -402,7 +402,7 @@ void fpDrawLog(struct GfxFont *font, s32 cellWidth, s32 cellHeight, u8 menuAlpha
     }
 }
 
-void fpCamUpdate(void) {
+static void fpCamUpdate(void) {
     if (fp.freeCam) {
         if (!fp.camEnabledBefore) {
             fp.cam.eye = pm_gCameras[pm_gCurrentCameraID].lookAt_eye;
@@ -439,7 +439,7 @@ void fpCamUpdate(void) {
  * fp's main update function
  * This runs after the base games full update loop every frame
  */
-void fpUpdate(void) {
+static void fpUpdate(void) {
     fpUpdateCpuCounter();
     inputUpdate();
 
@@ -534,7 +534,7 @@ void fpUpdate(void) {
  * fp's main draw function
  * This runs after the game draws the front UI every frame
  */
-void fpDraw(void) {
+static void fpDraw(void) {
     gfxModeInit();
 
     struct GfxFont *font = menuGetFont(fp.mainMenu, TRUE);

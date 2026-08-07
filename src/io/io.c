@@ -1,3 +1,4 @@
+#include "io.h"
 #include "ed64_io.h"
 #include "hb_io.h"
 #include "iodev.h"

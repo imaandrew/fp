@@ -12,8 +12,8 @@ s32 fifoPoll(void);
 s32 fifoRead(void *dst, size_t nBlocks);
 s32 fifoWrite(const void *src, size_t nBlocks);
 
-unsigned clockTicks(void);
-unsigned clockFreq(void);
+u32 clockTicks(void);
+u32 clockFreq(void);
 
 void cpuReset(void);
 

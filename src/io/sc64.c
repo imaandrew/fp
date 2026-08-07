@@ -1,6 +1,7 @@
 #include "sc64.h"
 #include "io/iodev.h"
 #include "pi.h"
+#include "sc64_io.h"
 #include "util/util.h"
 #include <stddef.h>
 

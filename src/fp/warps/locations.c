@@ -1,3 +1,4 @@
+#include "locations.h"
 #include "common.h"
 #include "fp.h"
 #include "menu/menu.h"

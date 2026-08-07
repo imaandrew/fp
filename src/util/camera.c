@@ -18,7 +18,7 @@ static f32 getFreeCamPanSpeed() {
 
 #define PITCH_LIM (M_PI / 2.f - getFreeCamPanSpeed())
 
-s32 adjustJoystick(s32 v) {
+static s32 adjustJoystick(s32 v) {
     if (v < 0) {
         if (v > -8) {
             return 0;
