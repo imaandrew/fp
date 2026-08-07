@@ -87,7 +87,7 @@ f32 vec3fAngle(Vec3f *a, Vec3f *b) {
 }
 
 Vec3f *vec3fNorm(Vec3f *r, Vec3f *a) {
-    return vec3fScale(r, a, 1.f / vec3fMag(a));
+    return vec3fScale(r, a, 1.F / vec3fMag(a));
 }
 
 Vec3f *vec3fProj(Vec3f *r, Vec3f *a, Vec3f *b) {
@@ -103,12 +103,12 @@ Vec3f *vec3fRej(Vec3f *r, Vec3f *a, Vec3f *b) {
 }
 
 f32 angleDif(f32 a, f32 b) {
-    f32 d = fmodf(a - b, M_PI * 2.f);
+    f32 d = fmodf(a - b, M_PI * 2.F);
     if (d < -M_PI) {
-        d += M_PI * 2.f;
+        d += M_PI * 2.F;
     }
     if (d > M_PI) {
-        d -= M_PI * 2.f;
+        d -= M_PI * 2.F;
     }
     return d;
 }

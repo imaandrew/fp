@@ -42,7 +42,7 @@ static s32 drawProc(struct MenuItem *item, struct MenuDrawParams *drawParams) {
                 strcpy(item->text, "-inf");
             } else {
                 if (!isnormal(v)) {
-                    v = 0.f;
+                    v = 0.F;
                 }
                 snprintf(item->text, 17, "%g", v);
             }

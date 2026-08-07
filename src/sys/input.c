@@ -328,7 +328,7 @@ static s32 drawProc(struct MenuItem *item, struct MenuDrawParams *drawParams) {
             break;
         }
         struct GfxSprite sprite = {
-            texture, c, 0, x + i * 10, y, 1.f, 1.f,
+            texture, c, 0, x + i * 10, y, 1.F, 1.F,
         };
         if (item->owner->selector != item) {
             gfxModeSet(GFX_MODE_COLOR, GPACK_RGB24A8(inputButtonColor[c], drawParams->alpha));

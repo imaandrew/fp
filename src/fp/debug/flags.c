@@ -241,8 +241,8 @@ void flagMenuCreate(struct Menu *menu) {
         viewRecordName = menuAddStatic(menu, 8, 1, NULL, 0xC0C0C0);
         viewRecordName->text = malloc(32);
         struct GfxTexture *tArrow = resourceGet(RES_ICON_ARROW);
-        viewPageup = menuAddButtonIcon(menu, 0, 2, tArrow, 0, 0, 0xFFFFFF, 1.0f, pageUpProc, NULL);
-        viewPagedown = menuAddButtonIcon(menu, 2, 2, tArrow, 1, 0, 0xFFFFFF, 1.0f, pageDownProc, NULL);
+        viewPageup = menuAddButtonIcon(menu, 0, 2, tArrow, 0, 0, 0xFFFFFF, 1.0F, pageUpProc, NULL);
+        viewPagedown = menuAddButtonIcon(menu, 2, 2, tArrow, 1, 0, 0xFFFFFF, 1.0F, pageDownProc, NULL);
         menuAddStatic(menu, 4, 2, "0123456789abcdef", 0xC0C0C0);
         static struct GfxTexture *tFlag;
         if (!tFlag) {
@@ -253,7 +253,7 @@ void flagMenuCreate(struct Menu *menu) {
             viewRows[y]->text = malloc(5);
             for (s32 x = 0; x < 0x10; ++x) {
                 s32 n = y * 0x10 + x;
-                viewCells[n] = menuAddSwitch(menu, 4 + x, 3 + y, tFlag, 1, 0, 0xFFFFFF, tFlag, 0, 0, 0xFFFFFF, 0.75f,
+                viewCells[n] = menuAddSwitch(menu, 4 + x, 3 + y, tFlag, 1, 0, 0xFFFFFF, tFlag, 0, 0, 0xFFFFFF, 0.75F,
                                              TRUE, flagProc, (void *)n);
             }
         }

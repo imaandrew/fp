@@ -298,8 +298,8 @@ static s32 fileDrawProc(struct MenuItem *item, struct MenuDrawParams *drawParams
         0,
         drawParams->x + (cw - texture->tileWidth) / 2,
         drawParams->y - (gfxFontXheight(drawParams->font) + texture->tileHeight + 1) / 2,
-        1.f,
-        1.f,
+        1.F,
+        1.F,
     };
     gfxModeSet(GFX_MODE_COLOR, GPACK_RGBA8888(0xFF, 0xFF, 0xFF, drawParams->alpha));
     gfxSpriteDraw(&sprite);
@@ -549,7 +549,7 @@ static void gfMenuInit(void) {
         gfReset = menuAddButton(menu, 0, 1, "reset disk", resetProc, NULL);
         gfLocation = menuAddStatic(menu, 0, 2, NULL, 0xC0C0C0);
         gfLocation->text = malloc(32);
-        gfMkdir = menuAddButtonIcon(menu, 0, 3, fileIcons, 3, 0, 0xFFFFFF, 1.0f, mkdirProc, NULL);
+        gfMkdir = menuAddButtonIcon(menu, 0, 3, fileIcons, 3, 0, 0xFFFFFF, 1.0F, mkdirProc, NULL);
         gfName = menuItemAdd(menu, 2, 2, NULL, 0xFFFFFF);
         gfName->text = malloc(32);
         gfName->text[0] = 0;
@@ -566,9 +566,9 @@ static void gfMenuInit(void) {
             gfFiles[i] = item;
         }
         struct GfxTexture *tArrow = resourceGet(RES_ICON_ARROW);
-        gfScrollUp = menuAddButtonIcon(menu, 0, 5, tArrow, 0, 0, 0xFFFFFF, 1.0f, scrollUpProc, NULL);
+        gfScrollUp = menuAddButtonIcon(menu, 0, 5, tArrow, 0, 0, 0xFFFFFF, 1.0F, scrollUpProc, NULL);
         gfScrollDown =
-            menuAddButtonIcon(menu, 0, 5 + FILE_VIEW_ROWS - 1, tArrow, 1, 0, 0xFFFFFF, 1.0f, scrollDownProc, NULL);
+            menuAddButtonIcon(menu, 0, 5 + FILE_VIEW_ROWS - 1, tArrow, 1, 0, 0xFFFFFF, 1.0F, scrollDownProc, NULL);
     }
     updateView(updateList(), TRUE);
 }

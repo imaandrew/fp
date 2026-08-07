@@ -256,7 +256,7 @@ static void spinDraw(s32 x, s32 y, struct GfxFont *font, s32 chWidth, s32 chHeig
         iconY = textY - 9;
         gfxModeSet(GFX_MODE_COLOR, colorWhite);
         gfxModeReplace(GFX_MODE_DROPSHADOW, 0);
-        struct GfxSprite aButtonSprite = {spinAButtonTex, 0, 0, x, iconY, 0.3f, 0.3f};
+        struct GfxSprite aButtonSprite = {spinAButtonTex, 0, 0, x, iconY, 0.3F, 0.3F};
         gfxSpriteDraw(&aButtonSprite);
         gfxModePop(GFX_MODE_DROPSHADOW);
         if (spinCanceled) {
@@ -288,7 +288,7 @@ static void spinDraw(s32 x, s32 y, struct GfxFont *font, s32 chWidth, s32 chHeig
         iconY = textY - 11;
         gfxModeSet(GFX_MODE_COLOR, colorWhite);
         gfxModeReplace(GFX_MODE_DROPSHADOW, 0);
-        struct GfxSprite bootSprite = {spinBootTex, 0, 0, x, iconY, 0.5f, 0.5f};
+        struct GfxSprite bootSprite = {spinBootTex, 0, 0, x, iconY, 0.5F, 0.5F};
         gfxSpriteDraw(&bootSprite);
         gfxModePop(GFX_MODE_DROPSHADOW);
         if (spinCanceled) {
@@ -312,7 +312,7 @@ static void spinDraw(s32 x, s32 y, struct GfxFont *font, s32 chWidth, s32 chHeig
         iconY = textY - 11;
         gfxModeSet(GFX_MODE_COLOR, colorWhite);
         gfxModeReplace(GFX_MODE_DROPSHADOW, 0);
-        struct GfxSprite clockSprite = {spinClockTex, 0, 0, x, iconY, 1.f, 1.f};
+        struct GfxSprite clockSprite = {spinClockTex, 0, 0, x, iconY, 1.F, 1.F};
         gfxSpriteDraw(&clockSprite);
         gfxModePop(GFX_MODE_DROPSHADOW);
         if (spinDelayLast == 0) {
@@ -331,7 +331,7 @@ static void spinDraw(s32 x, s32 y, struct GfxFont *font, s32 chWidth, s32 chHeig
         iconY = textY - 9;
         gfxModeSet(GFX_MODE_COLOR, colorWhite);
         gfxModeReplace(GFX_MODE_DROPSHADOW, 0);
-        struct GfxSprite zButtonSprite = {spinZButtonTex, 0, 0, x + 2, iconY, 1.f, 1.f};
+        struct GfxSprite zButtonSprite = {spinZButtonTex, 0, 0, x + 2, iconY, 1.F, 1.F};
         gfxSpriteDraw(&zButtonSprite);
         gfxModePop(GFX_MODE_DROPSHADOW);
         if (spinBufferLast == -1) {
@@ -353,7 +353,7 @@ static void issDraw(s32 x, s32 y, struct GfxFont *font, s32 chWidth, s32 chHeigh
     bool goodPos = FALSE;
     bool willClip = FALSE;
 
-    if (pm_gPlayerStatus.position.z >= -26.3686f) {
+    if (pm_gPlayerStatus.position.z >= -26.3686F) {
         // check if in a known position that will clip and respawn OoB
         if ((zPos == -24 && xPos == -184) || (zPos == -25 && (xPos >= -186 && xPos <= -183)) ||
             (zPos == -26 && (xPos >= -186 && xPos <= -182))) {
@@ -381,7 +381,7 @@ static void issDraw(s32 x, s32 y, struct GfxFont *font, s32 chWidth, s32 chHeigh
     gfxPrintf(font, x, y + chHeight * menuY++, "x:     %.4f", pm_gPlayerStatus.position.x);
     gfxPrintf(font, x, y + chHeight * menuY++, "z:     %.4f", pm_gPlayerStatus.position.z);
     gfxPrintf(font, x, y + chHeight * menuY, "angle:");
-    if (pm_gPlayerStatus.currentYaw >= 43.9f && pm_gPlayerStatus.currentYaw <= 46.15f) {
+    if (pm_gPlayerStatus.currentYaw >= 43.9F && pm_gPlayerStatus.currentYaw <= 46.15F) {
         gfxModeSet(GFX_MODE_COLOR, colorGreen);
     } else {
         gfxModeSet(GFX_MODE_COLOR, colorWhite);
@@ -963,8 +963,8 @@ void trainerDrawSpinBar(s32 x, s32 y, struct GfxFont *font, u32 color, u8 alpha)
 
     gfxModeSet(GFX_MODE_COLOR, colorWhite);
     gfxModeReplace(GFX_MODE_DROPSHADOW, 0);
-    struct GfxSprite bootSprite = {spinBootTex, 0, 0, jumpIconX, iconY, 0.5f, 0.5f};
-    struct GfxSprite clockSprite = {spinClockTex, 0, 0, delayIconX, iconY, 1.f, 1.f};
+    struct GfxSprite bootSprite = {spinBootTex, 0, 0, jumpIconX, iconY, 0.5F, 0.5F};
+    struct GfxSprite clockSprite = {spinClockTex, 0, 0, delayIconX, iconY, 1.F, 1.F};
     gfxSpriteDraw(&bootSprite);
     gfxSpriteDraw(&clockSprite);
     gfxModePop(GFX_MODE_DROPSHADOW);
@@ -1054,7 +1054,7 @@ void createTrainerMenu(struct Menu *menu) {
 
     menuAddStatic(menu, 0, y, "lzs jumps", 0xC0C0C0);
     menuAddCheckbox(menu, xOffset, y, menuByteCheckboxProc, &settings->trainerLzsEnabled);
-    menuAddSubmenuIcon(menu, xOffset + 2, y++, &lzsMenu, wrench, 0, 0, 1.0f);
+    menuAddSubmenuIcon(menu, xOffset + 2, y++, &lzsMenu, wrench, 0, 0, 1.0F);
 
     menuAddStatic(menu, 0, y, "action commands", 0xC0C0C0);
     menuAddCheckbox(menu, xOffset, y++, menuByteCheckboxProc, &settings->trainerAcEnabled);
@@ -1069,13 +1069,13 @@ void createTrainerMenu(struct Menu *menu) {
     menuAddCheckbox(menu, xOffset, y++, menuByteCheckboxProc, &settings->trainerClippyEnabled);
 
     menuAddStatic(menu, 0, y, "spin", 0xC0C0C0);
-    struct MenuItem *lastOption = menuAddSubmenuIcon(menu, xOffset, y++, &spinMenu, wrench, 0, 0, 1.0f);
+    struct MenuItem *lastOption = menuAddSubmenuIcon(menu, xOffset, y++, &spinMenu, wrench, 0, 0, 1.0F);
 #if PM64_VERSION == JP
     menuAddStatic(menu, 0, y, "ice staircase skip", 0xC0C0C0);
-    menuAddSubmenuIcon(menu, xOffset, y++, &issMenu, wrench, 0, 0, 1.0f);
+    menuAddSubmenuIcon(menu, xOffset, y++, &issMenu, wrench, 0, 0, 1.0F);
 
     menuAddStatic(menu, 0, y, "oot ace", 0xC0C0C0);
-    lastOption = menuAddSubmenuIcon(menu, xOffset, y++, &aceMenu, wrench, 0, 0, 1.0f);
+    lastOption = menuAddSubmenuIcon(menu, xOffset, y++, &aceMenu, wrench, 0, 0, 1.0F);
 #endif
     y++;
     struct MenuItem *unpinButton = menuAddButton(menu, 0, y++, "unpin trainer", unpinProc, NULL);

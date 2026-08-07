@@ -191,7 +191,7 @@ static void fpDrawVersion(struct GfxFont *font, s32 cellWidth, s32 cellHeight, u
             fpIconTex = resourceLoadPmiconItem(ITEM_FP_PLUS_A, FALSE);
         }
         struct GfxSprite fpIconSprite = {
-            fpIconTex, 0, 0, 15, SCREEN_HEIGHT - 65, 1.f, 1.f,
+            fpIconTex, 0, 0, 15, SCREEN_HEIGHT - 65, 1.F, 1.F,
         };
         gfxModeReplace(GFX_MODE_DROPSHADOW, 0);
         gfxModeSet(GFX_MODE_COLOR, GPACK_RGBA8888(0xFF, 0xFF, 0xFF, 0xFF));
@@ -230,7 +230,7 @@ static void fpDrawInputDisplay(struct GfxFont *font, s32 cellWidth, s32 cellHeig
             imageDy = -dY * imageRange / settings->controlStickRange;
         }
         struct GfxSprite inBackground = {
-            controlStick, 0, 0, settings->inputDisplayX, settings->inputDisplayY - controlStick->tileHeight, 1.f, 1.f,
+            controlStick, 0, 0, settings->inputDisplayX, settings->inputDisplayY - controlStick->tileHeight, 1.F, 1.F,
         };
         struct GfxSprite inStick = {
             controlStick,
@@ -238,8 +238,8 @@ static void fpDrawInputDisplay(struct GfxFont *font, s32 cellWidth, s32 cellHeig
             0,
             settings->inputDisplayX + imageDx,
             settings->inputDisplayY - controlStick->tileHeight + imageDy,
-            1.f,
-            1.f,
+            1.F,
+            1.F,
         };
         gfxSpriteDraw(&inBackground);
         gfxSpriteDraw(&inStick);
@@ -269,7 +269,7 @@ static void fpDrawInputDisplay(struct GfxFont *font, s32 cellWidth, s32 cellHeig
             buttonDx = controlStick->tileWidth + cellWidth;
         }
         struct GfxSprite sprite = {
-            texture, b, 0, settings->inputDisplayX + buttonDx + x, settings->inputDisplayY + y, 1.f, 1.f,
+            texture, b, 0, settings->inputDisplayX + buttonDx + x, settings->inputDisplayY + y, 1.F, 1.F,
         };
         gfxModeSet(GFX_MODE_COLOR, GPACK_RGB24A8(inputButtonColor[b], menuAlpha));
         gfxSpriteDraw(&sprite);
@@ -471,8 +471,8 @@ static void fpUpdate(void) {
             fp.versionShown = TRUE;
         } else {
             // skip logos and intro
-            pm_set_curtain_scale(1.0f);
-            pm_set_curtain_fade(0.0f);
+            pm_set_curtain_scale(1.0F);
+            pm_set_curtain_fade(0.0F);
             pm_set_game_mode(2); // GAME_MODE_TITLE_SCREEN
         }
     }
@@ -489,9 +489,9 @@ static void fpUpdate(void) {
     fpUpdateCheats();
 
     if (fp.turbo) {
-        pm_gPlayerStatus.runSpeed = 24.0f;
+        pm_gPlayerStatus.runSpeed = 24.0F;
     } else {
-        pm_gPlayerStatus.runSpeed = 4.0f;
+        pm_gPlayerStatus.runSpeed = 4.0F;
     }
 
     for (s32 i = 0; i < COMMAND_MAX; ++i) {

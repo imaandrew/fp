@@ -205,14 +205,14 @@ struct Menu *createFileMenu(void) {
     menu.selector = menuAddSubmenu(&menu, 0, y++, NULL, "return");
     y++;
     struct MenuItem *saveButton =
-        menuAddButtonIcon(&menu, 0, y, tSave, 3, 0, 0xFFFFFF, 1.0f, menuFuncProc, commandSaveGameProc);
+        menuAddButtonIcon(&menu, 0, y, tSave, 3, 0, 0xFFFFFF, 1.0F, menuFuncProc, commandSaveGameProc);
     saveButton->tooltip = "save";
     struct MenuItem *loadButton =
-        menuAddButtonIcon(&menu, 3, y, tSave, 2, 0, 0xFFFFFF, 1.0f, menuFuncProc, commandLoadGameProc);
+        menuAddButtonIcon(&menu, 3, y, tSave, 2, 0, 0xFFFFFF, 1.0F, menuFuncProc, commandLoadGameProc);
     loadButton->tooltip = "load";
-    struct MenuItem *exportButton = menuAddButtonIcon(&menu, 6, y, tSave, 1, 0, 0xFFFFFF, 1.0f, exportFileProc, NULL);
+    struct MenuItem *exportButton = menuAddButtonIcon(&menu, 6, y, tSave, 1, 0, 0xFFFFFF, 1.0F, exportFileProc, NULL);
     exportButton->tooltip = "export";
-    struct MenuItem *importButton = menuAddButtonIcon(&menu, 9, y, tSave, 0, 0, 0xFFFFFF, 1.0f, importFileProc, NULL);
+    struct MenuItem *importButton = menuAddButtonIcon(&menu, 9, y, tSave, 0, 0, 0xFFFFFF, 1.0F, importFileProc, NULL);
     importButton->tooltip = "import";
     menuAddTooltip(&menu, 12, y++, fp.mainMenu, 0xC0C0C0);
     struct MenuItem *fileButtons[4] = {saveButton, loadButton, exportButton, importButton};

@@ -38,8 +38,8 @@ static s32 drawProc(struct MenuItem *item, struct MenuDrawParams *drawParams) {
         0,
         drawParams->x + (cw - texture->tileWidth) / 2,
         drawParams->y - (gfxFontXheight(drawParams->font) + texture->tileHeight + 1) / 2,
-        1.f,
-        1.f,
+        1.F,
+        1.F,
     };
     gfxSpriteDraw(&sprite);
     if ((data->animState > 0) != data->state) {

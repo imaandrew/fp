@@ -524,7 +524,7 @@ static void createItemSelectionPage(struct Menu *page, const char *title, struct
     const s32 baseX = 1;
     const s32 baseY = 5;
     const s32 spacing = 2;
-    const f32 scale = 0.6f;
+    const f32 scale = 0.6F;
 
     s32 totalItemCount = 0;
     for (s32 i = 0; i < itemListCount; i++) {
@@ -645,15 +645,15 @@ static void createItemsMenu(struct Menu *menu, enum ItemType itemType, struct Gf
 }
 
 void createNormalItemsMenu(struct Menu *menu, struct GfxTexture *itemTextureList[]) {
-    createItemsMenu(menu, ITEM_TYPE_NORMAL, itemTextureList, 0.8f, 10, 5, 10, 4, 4);
+    createItemsMenu(menu, ITEM_TYPE_NORMAL, itemTextureList, 0.8F, 10, 5, 10, 4, 4);
 }
 
 void createKeyItemsMenu(struct Menu *menu, struct GfxTexture *itemTextureList[]) {
-    createItemsMenu(menu, ITEM_TYPE_KEY, itemTextureList, 0.7f, 32, 8, 32, 3, 3);
+    createItemsMenu(menu, ITEM_TYPE_KEY, itemTextureList, 0.7F, 32, 8, 32, 3, 3);
 }
 
 void createStoredItemsMenu(struct Menu *menu, struct GfxTexture *itemTextureList[]) {
-    createItemsMenu(menu, ITEM_TYPE_STORED, itemTextureList, 0.7f, 32, 8, 32, 3, 3);
+    createItemsMenu(menu, ITEM_TYPE_STORED, itemTextureList, 0.7F, 32, 8, 32, 3, 3);
 }
 
 void createBadgesMenu(struct Menu *menu, struct GfxTexture *itemTextureList[]) {
@@ -671,7 +671,7 @@ void createBadgesMenu(struct Menu *menu, struct GfxTexture *itemTextureList[]) {
         u8 badgeY = baseY + (i / rowWidth) * spacingY;
         s32 itemId = itemsBadges[i];
         struct GfxTexture *badgeIcon = resourceLoadPmiconItem(itemId, FALSE);
-        badgeItems[i] = menuAddSwitch(menu, badgeX, badgeY, badgeIcon, 0, 0, 0xFFFFFF, badgeIcon, 0, 1, 0xFFFFFF, 0.6f,
+        badgeItems[i] = menuAddSwitch(menu, badgeX, badgeY, badgeIcon, 0, 0, 0xFFFFFF, badgeIcon, 0, 1, 0xFFFFFF, 0.6F,
                                       FALSE, badgeProcSwitch, (void *)itemId);
         badgeItems[i]->tooltip = strItemNames[itemId];
     }
@@ -683,7 +683,7 @@ void createBadgesMenu(struct Menu *menu, struct GfxTexture *itemTextureList[]) {
     static struct Menu fullBadgeList;
     menuInit(&fullBadgeList, MENU_NOVALUE, MENU_NOVALUE, MENU_NOVALUE);
     struct MenuItem *fullListItem = menuAddSubmenu(menu, 0, 18, &fullBadgeList, "full list");
-    createItemsMenu(&fullBadgeList, ITEM_TYPE_BADGE, itemTextureList, 0.7f, 128, 8, 32, 3, 3);
+    createItemsMenu(&fullBadgeList, ITEM_TYPE_BADGE, itemTextureList, 0.7F, 128, 8, 32, 3, 3);
 
     menuItemAddChainLink(fullListItem, badgeItems[70], MENU_NAVIGATE_UP);
     menuItemAddChainLink(badgeItems[70], fullListItem, MENU_NAVIGATE_DOWN);

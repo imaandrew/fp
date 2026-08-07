@@ -284,8 +284,8 @@ void memMenuCreate(struct Menu *menu) {
         viewDomainName = menuAddStatic(menu, 22, 1, NULL, 0xC0C0C0);
         viewDomainName->text = malloc(32);
         struct GfxTexture *tArrow = resourceGet(RES_ICON_ARROW);
-        viewPageup = menuAddButtonIcon(menu, 0, 2, tArrow, 0, 0, 0xFFFFFF, 1.0f, pageUpProc, NULL);
-        viewPagedown = menuAddButtonIcon(menu, 2, 2, tArrow, 1, 0, 0xFFFFFF, 1.0f, pageDownProc, NULL);
+        viewPageup = menuAddButtonIcon(menu, 0, 2, tArrow, 0, 0, 0xFFFFFF, 1.0F, pageUpProc, NULL);
+        viewPagedown = menuAddButtonIcon(menu, 2, 2, tArrow, 1, 0, 0xFFFFFF, 1.0F, pageDownProc, NULL);
         viewCellHeader = menuAddStatic(menu, 9, 2, NULL, 0xC0C0C0);
         viewCellHeader->text = malloc(32);
         for (s32 y = 0; y < MEM_VIEW_ROWS; ++y) {

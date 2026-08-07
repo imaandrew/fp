@@ -268,14 +268,14 @@ f32 menuFloatinputGet(struct MenuItem *item) {
 
 void menuFloatinputSet(struct MenuItem *item, f32 value) {
     if (isNan(value) || !isnormal(value)) {
-        value = 0.f;
+        value = 0.F;
     }
     struct ItemData *data = item->data;
     data->value = value;
 
     s32 sigSign = signbit(value) ? -1 : 1;
     value = fabsf(value);
-    s32 exp = value == 0.f ? 0.f : floorf(log10f(value));
+    s32 exp = value == 0.F ? 0.F : floorf(log10f(value));
     s32 sig = value / pow(10., exp - (data->sigPrecis - 1)) + 0.5;
     s32 expSign = exp < 0 ? -1 : 1;
     exp *= expSign;

@@ -102,8 +102,8 @@ static s32 anchorButtonDrawProc(struct MenuItem *item, struct MenuDrawParams *dr
         0,
         drawParams->x + (cw - texture->tileWidth) / 2,
         drawParams->y - (gfxFontXheight(drawParams->font) + texture->tileHeight + 1) / 2,
-        1.f,
-        1.f,
+        1.F,
+        1.F,
     };
     gfxSpriteDraw(&sprite);
     if (memberData->anchorAnimState > 0) {
@@ -185,8 +185,8 @@ static s32 addMember(struct ItemData *data, u32 address, enum WatchType type, s3
     memberData->x = x;
     memberData->y = y;
     memberData->positionSet = TRUE;
-    menuAddButtonIcon(imenu, 0, 0, listIcons, 1, 0, 0xFF0000, 1.0f, removeButtonProc, memberData);
-    menuAddButtonIcon(imenu, 2, 0, wrench, 0, 0, 0xFFFFFF, 1.0f, editWatchInMemoryProc, memberData);
+    menuAddButtonIcon(imenu, 0, 0, listIcons, 1, 0, 0xFF0000, 1.0F, removeButtonProc, memberData);
+    menuAddButtonIcon(imenu, 2, 0, wrench, 0, 0, 0xFFFFFF, 1.0F, editWatchInMemoryProc, memberData);
 
     if (!settings->watchesVisible) {
         struct MenuItem *watch = menuUserwatchWatch(memberData->userwatch);
@@ -308,10 +308,10 @@ struct MenuItem *watchlistCreate(struct Menu *menu, struct Menu *menuRelease, s3
     if (!wrench) {
         wrench = resourceLoadGrcTexture("wrench");
     }
-    data->addButton = menuAddButtonIcon(imenu, 0, 0, listIcons, 0, 0, 0x00FF00, 1.0f, addButtonProc, data);
+    data->addButton = menuAddButtonIcon(imenu, 0, 0, listIcons, 0, 0, 0x00FF00, 1.0F, addButtonProc, data);
 
     struct GfxTexture *fileIcons = resourceGet(RES_ICON_FILE);
-    data->importButton = menuAddButtonIcon(imenu, 2, 0, fileIcons, 1, 0, 0xFFFFFF, 1.0f, importButtonProc, data);
+    data->importButton = menuAddButtonIcon(imenu, 2, 0, fileIcons, 1, 0, 0xFFFFFF, 1.0F, importButtonProc, data);
     item->data = data;
     item->destroyProc = destroyProc;
     return item;
@@ -465,8 +465,8 @@ static void watchfileMenuInit(void) {
         watchfileReturn = menuAddSubmenu(menu, 0, 0, NULL, "return");
         watchfileReturn->leaveProc = watchfileLeaveProc;
         struct GfxTexture *tArrow = resourceGet(RES_ICON_ARROW);
-        menuAddButtonIcon(menu, 0, 1, tArrow, 0, 0, 0xFFFFFF, 1.0f, scrollUpProc, NULL);
-        menuAddButtonIcon(menu, 0, 1 + WATCHFILE_VIEW_ROWS - 1, tArrow, 1, 0, 0xFFFFFF, 1.0f, scrollDownProc, NULL);
+        menuAddButtonIcon(menu, 0, 1, tArrow, 0, 0, 0xFFFFFF, 1.0F, scrollUpProc, NULL);
+        menuAddButtonIcon(menu, 0, 1 + WATCHFILE_VIEW_ROWS - 1, tArrow, 1, 0, 0xFFFFFF, 1.0F, scrollDownProc, NULL);
         for (s32 i = 0; i < WATCHFILE_VIEW_ROWS; ++i) {
             struct MenuItem *item = menuItemAdd(menu, 2, 1 + i, NULL, 0xFFFFFF);
             item->data = (void *)i;

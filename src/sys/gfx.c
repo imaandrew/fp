@@ -43,8 +43,8 @@ static inline void gfxSync(void) {
     }
 }
 
-const MtxF gfxCmDesaturate = guDefMtxF(0.3086f, 0.6094f, 0.0820f, 0.f, 0.3086f, 0.6094f, 0.0820f, 0.f, 0.3086f, 0.6094f,
-                                       0.0820f, 0.f, 0.f, 0.f, 0.f, 1.f);
+const MtxF gfxCmDesaturate = guDefMtxF(0.3086F, 0.6094F, 0.0820F, 0.F, 0.3086F, 0.6094F, 0.0820F, 0.F, 0.3086F, 0.6094F,
+                                       0.0820F, 0.F, 0.F, 0.F, 0.F, 1.F);
 
 void gfxStart(void) {
     for (s32 i = 0; i < CHAR_TILE_MAX; ++i) {
@@ -531,7 +531,7 @@ void gfxAddGrayscalePalette(struct GfxTexture *texture, s8 basePaletteIndex) {
             RGBA *oldPixel = &basePalette[iPixel];
             RGBA *newPixel = &((RGBA *)newPalette)[iPixel];
 
-            f32 lum = 0.2782f * oldPixel->r + 0.6562f * oldPixel->g + 0.0656f * oldPixel->b;
+            f32 lum = 0.2782F * oldPixel->r + 0.6562F * oldPixel->g + 0.0656F * oldPixel->b;
             u16 gray = (lum * 14 / 31) + 12;
             newPixel->r = gray;
             newPixel->g = gray;
@@ -585,14 +585,14 @@ void gfxSpriteDraw(const struct GfxSprite *sprite) {
         gSPScisTextureRectangle(gfxDispP++, qs102(sprite->x + 1) & ~3, qs102(sprite->y + 1) & ~3,
                                 qs102(sprite->x + texture->tileWidth * sprite->xScale + 1) & ~3,
                                 qs102(sprite->y + texture->tileHeight * sprite->yScale + 1) & ~3, G_TX_RENDERTILE,
-                                qu105(0), qu105(0), qu510(1.f / sprite->xScale), qu510(1.f / sprite->yScale));
+                                qu105(0), qu105(0), qu510(1.F / sprite->xScale), qu510(1.F / sprite->yScale));
         gfxModePop(GFX_MODE_COLOR);
     }
     gfxSync();
     gSPScisTextureRectangle(gfxDispP++, qs102(sprite->x) & ~3, qs102(sprite->y) & ~3,
                             qs102(sprite->x + texture->tileWidth * sprite->xScale) & ~3,
                             qs102(sprite->y + texture->tileHeight * sprite->yScale) & ~3, G_TX_RENDERTILE, qu105(0),
-                            qu105(0), qu510(1.f / sprite->xScale), qu510(1.f / sprite->yScale));
+                            qu105(0), qu510(1.F / sprite->xScale), qu510(1.F / sprite->yScale));
     gfxSynced = FALSE;
 }
 

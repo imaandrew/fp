@@ -7,27 +7,27 @@ void guMtxIdent(Mtx *m) {
 }
 
 void guMtxIdentF(MtxF *mf) {
-    *mf = (MtxF)guDefMtxF(1.f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 0.f, 1.f);
+    *mf = (MtxF)guDefMtxF(1.F, 0.F, 0.F, 0.F, 0.F, 1.F, 0.F, 0.F, 0.F, 0.F, 1.F, 0.F, 0.F, 0.F, 0.F, 1.F);
 }
 
 void guPerspectiveF(MtxF *mf, u16 *perspNorm, f32 fovy, f32 aspect, f32 near, f32 far, f32 scale) {
-    f32 cot = cos(fovy / 2.f) / sin(fovy / 2.f);
+    f32 cot = cos(fovy / 2.F) / sin(fovy / 2.F);
     mf->xx = cot / aspect * scale;
-    mf->xy = 0.f;
-    mf->xz = 0.f;
-    mf->xw = 0.f;
-    mf->yx = 0.f;
+    mf->xy = 0.F;
+    mf->xz = 0.F;
+    mf->xw = 0.F;
+    mf->yx = 0.F;
     mf->yy = cot * scale;
-    mf->yz = 0.f;
-    mf->yw = 0.f;
-    mf->zx = 0.f;
-    mf->zy = 0.f;
+    mf->yz = 0.F;
+    mf->yw = 0.F;
+    mf->zx = 0.F;
+    mf->zy = 0.F;
     mf->zz = (near + far) / (near - far) * scale;
-    mf->zw = -1.f * scale;
-    mf->wx = 0.f;
-    mf->wy = 0.f;
-    mf->wz = 2.f * near * far / (near - far) * scale;
-    mf->ww = 0.f;
+    mf->zw = -1.F * scale;
+    mf->wx = 0.F;
+    mf->wy = 0.F;
+    mf->wz = 2.F * near * far / (near - far) * scale;
+    mf->ww = 0.F;
 }
 
 void guMtxCatF(const MtxF *m, const MtxF *n, MtxF *r) {
@@ -54,22 +54,22 @@ void guMtxCatF(const MtxF *m, const MtxF *n, MtxF *r) {
 void guRotateF(MtxF *mf, f32 a, f32 x, f32 y, f32 z) {
     f32 s = sin(a);
     f32 c = cos(a);
-    mf->xx = x * x + c * (1.f - x * x);
-    mf->xy = x * y * (1.f - c) + z * s;
-    mf->xz = x * z * (1.f - c) - y * s;
-    mf->xw = 0.f;
-    mf->yx = y * x * (1.f - c) - z * s;
-    mf->yy = y * y + c * (1.f - y * y);
-    mf->yz = y * z * (1.f - c) + x * s;
-    mf->yw = 0.f;
-    mf->zx = z * x * (1.f - c) + y * s;
-    mf->zy = z * y * (1.f - c) - x * s;
-    mf->zz = z * z + c * (1.f - z * z);
-    mf->zw = 0.f;
-    mf->wx = 0.f;
-    mf->wy = 0.f;
-    mf->wz = 0.f;
-    mf->ww = 1.f;
+    mf->xx = x * x + c * (1.F - x * x);
+    mf->xy = x * y * (1.F - c) + z * s;
+    mf->xz = x * z * (1.F - c) - y * s;
+    mf->xw = 0.F;
+    mf->yx = y * x * (1.F - c) - z * s;
+    mf->yy = y * y + c * (1.F - y * y);
+    mf->yz = y * z * (1.F - c) + x * s;
+    mf->yw = 0.F;
+    mf->zx = z * x * (1.F - c) + y * s;
+    mf->zy = z * y * (1.F - c) - x * s;
+    mf->zz = z * z + c * (1.F - z * z);
+    mf->zw = 0.F;
+    mf->wx = 0.F;
+    mf->wy = 0.F;
+    mf->wz = 0.F;
+    mf->ww = 1.F;
 }
 
 void guRotateRPYF(MtxF *mf, f32 r, f32 p, f32 h) {
@@ -82,27 +82,27 @@ void guRotateRPYF(MtxF *mf, f32 r, f32 p, f32 h) {
     mf->xx = cp * ch;
     mf->xy = cp * sh;
     mf->xz = -sp;
-    mf->xw = 0.f;
+    mf->xw = 0.F;
     mf->yx = sr * sp * ch - cr * sh;
     mf->yy = sr * sp * sh + cr * ch;
     mf->yz = sr * cp;
-    mf->yw = 0.f;
+    mf->yw = 0.F;
     mf->zx = cr * sp * ch + sr * sh;
     mf->zy = cr * sp * sh - sp * sh;
     mf->zz = cr * cp;
-    mf->zw = 0.f;
-    mf->wx = 0.f;
-    mf->wy = 0.f;
-    mf->wz = 0.f;
-    mf->ww = 1.f;
+    mf->zw = 0.F;
+    mf->wx = 0.F;
+    mf->wy = 0.F;
+    mf->wz = 0.F;
+    mf->ww = 1.F;
 }
 
 void guScaleF(MtxF *mf, f32 x, f32 y, f32 z) {
-    *mf = (MtxF)guDefMtxF(x, 0.f, 0.f, 0.f, 0.f, y, 0.f, 0.f, 0.f, 0.f, z, 0.f, 0.f, 0.f, 0.f, 1.f);
+    *mf = (MtxF)guDefMtxF(x, 0.F, 0.F, 0.F, 0.F, y, 0.F, 0.F, 0.F, 0.F, z, 0.F, 0.F, 0.F, 0.F, 1.F);
 }
 
 void guTranslateF(MtxF *mf, f32 x, f32 y, f32 z) {
-    *mf = (MtxF)guDefMtxF(1.f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f, x, y, z, 1.f);
+    *mf = (MtxF)guDefMtxF(1.F, 0.F, 0.F, 0.F, 0.F, 1.F, 0.F, 0.F, 0.F, 0.F, 1.F, 0.F, x, y, z, 1.F);
 }
 
 void guMtxF2L(const MtxF *mf, Mtx *m) {

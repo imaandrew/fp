@@ -70,7 +70,7 @@ static s32 drawProc(struct MenuItem *item, struct MenuDrawParams *drawParams) {
     }
     gfxModeSet(GFX_MODE_COLOR,
                GPACK_RGBA8888((color >> 16) & 0xFF, (color >> 8) & 0xFF, (color >> 0) & 0xFF, drawParams->alpha));
-    if (data->scale != 1.f) {
+    if (data->scale != 1.F) {
         gfxModeReplace(GFX_MODE_FILTER, G_TF_BILERP);
     } else {
         gfxModeReplace(GFX_MODE_FILTER, G_TF_POINT);

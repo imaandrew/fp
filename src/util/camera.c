@@ -5,15 +5,15 @@
 #include <math.h>
 #include <n64.h>
 
-static const f32 joyMax = 60.f;
-static const f32 folMspeed = 1.f / 3.f;
-static const f32 folRspeed = 1.f / 3.f;
+static const f32 joyMax = 60.F;
+static const f32 folMspeed = 1.F / 3.F;
+static const f32 folRspeed = 1.F / 3.F;
 
 static f32 getFreeCamMoveSpeed() {
-    return 0.001f * fp.freeCamMoveSpeed;
+    return 0.001F * fp.freeCamMoveSpeed;
 }
 static f32 getFreeCamPanSpeed() {
-    return 0.00001f * fp.freeCamPanSpeed;
+    return 0.00001F * fp.freeCamPanSpeed;
 }
 
 #define PITCH_LIM (M_PI / 2.f - getFreeCamPanSpeed())
@@ -47,7 +47,7 @@ static void camManual(void) {
         Vec3f vr;
         Vec3f move;
         vec3fPy(&vf, fp.cam.pitch, fp.cam.yaw);
-        vec3fPy(&vr, 0.f, fp.cam.yaw - M_PI / 2.f);
+        vec3fPy(&vr, 0.F, fp.cam.yaw - M_PI / 2.F);
         f32 joyMspeed = getFreeCamMoveSpeed();
         f32 joyRspeed = getFreeCamPanSpeed();
 
@@ -167,12 +167,12 @@ static void camRadial(void) {
     }
 
     if (dist < fp.camDistMin) {
-        f32 norm = 1.f / dist;
+        f32 norm = 1.F / dist;
         Vec3f move;
         vec3fScale(&move, &vp, (dist - fp.camDistMin) * folMspeed * norm);
         vec3fAdd(&fp.cam.eye, &fp.cam.eye, &move);
     } else if (dist > fp.camDistMax) {
-        f32 norm = 1.f / dist;
+        f32 norm = 1.F / dist;
         Vec3f move;
         vec3fScale(&move, &vp, (dist - fp.camDistMax) * folMspeed * norm);
         vec3fAdd(&fp.cam.eye, &fp.cam.eye, &move);

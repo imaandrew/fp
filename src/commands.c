@@ -108,9 +108,9 @@ bool fpWarp(enum Areas area, u16 map, u16 entrance) {
 
     // set the global curtain to default+off state
     // this is mainly to prevent a crash when warping from "card obtained"
-    pm_set_curtain_scale_goal(2.0f);
+    pm_set_curtain_scale_goal(2.0F);
     pm_set_curtain_draw_callback(NULL);
-    pm_set_curtain_fade_goal(0.0f);
+    pm_set_curtain_fade_goal(0.0F);
 
     fp.warp = TRUE;
 
@@ -145,9 +145,9 @@ void commandLevitateProc(void) {
     pm_gPlayerStatus.ySpeed = 11;
     pm_gPlayerStatus.framesInAir = 1;
     // these are the default starting values for when you fall
-    pm_gPlayerStatus.yAcceleration = -0.350080013275f;
-    pm_gPlayerStatus.yJerk = -0.182262003422f;
-    pm_gPlayerStatus.ySnap = 0.0115200001746f;
+    pm_gPlayerStatus.yAcceleration = -0.350080013275F;
+    pm_gPlayerStatus.yJerk = -0.182262003422F;
+    pm_gPlayerStatus.ySnap = 0.0115200001746F;
 
     if (pm_gGameStatus.peachFlags & (1 << 0)) {
         pm_PlayerActionsTable[5].flag = TRUE;

@@ -13,7 +13,7 @@ void menuInit(struct Menu *menu, s32 cellWidth, s32 cellHeight, struct GfxFont *
     menu->cellWidth = cellWidth;
     menu->cellHeight = cellHeight;
     menu->font = font;
-    menu->alpha = 1.f;
+    menu->alpha = 1.F;
     list_init(&menu->items, sizeof(struct MenuItem));
     menu->selector = NULL;
     menu->parent = NULL;
@@ -130,10 +130,10 @@ f32 menuGetAlpha(struct Menu *menu, bool inherit) {
 
 u8 menuGetAlphaI(struct Menu *menu, bool inherit) {
     f32 alpha = menuGetAlpha(menu, inherit);
-    if (alpha < 0.f) {
-        alpha = 0.f;
-    } else if (alpha > 1.f) {
-        alpha = 1.f;
+    if (alpha < 0.F) {
+        alpha = 0.F;
+    } else if (alpha > 1.F) {
+        alpha = 1.F;
     }
     return alpha * 0xFF;
 }

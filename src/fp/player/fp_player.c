@@ -208,26 +208,26 @@ static void createGearMenu(struct Menu *menu) {
     struct MenuItem *item;
     s32 bootsX = 1;
     s32 bootsY = 2;
-    item = menuAddSwitch(menu, bootsX, bootsY, texBootsNormal, 0, 0, 0xFFFFFF, texBootsNormal, 0, 1, 0xFFFFFF, 0.7f,
+    item = menuAddSwitch(menu, bootsX, bootsY, texBootsNormal, 0, 0, 0xFFFFFF, texBootsNormal, 0, 1, 0xFFFFFF, 0.7F,
                          FALSE, bootsProc, (void *)0);
     item->tooltip = strBootsNormal;
-    item = menuAddSwitch(menu, bootsX + 3, bootsY, texBootsSuper, 0, 0, 0xFFFFFF, texBootsSuper, 0, 1, 0xFFFFFF, 0.7f,
+    item = menuAddSwitch(menu, bootsX + 3, bootsY, texBootsSuper, 0, 0, 0xFFFFFF, texBootsSuper, 0, 1, 0xFFFFFF, 0.7F,
                          FALSE, bootsProc, (void *)1);
     item->tooltip = strBootsSuper;
-    item = menuAddSwitch(menu, bootsX + 6, bootsY, texBootsUltra, 0, 0, 0xFFFFFF, texBootsUltra, 0, 1, 0xFFFFFF, 0.7f,
+    item = menuAddSwitch(menu, bootsX + 6, bootsY, texBootsUltra, 0, 0, 0xFFFFFF, texBootsUltra, 0, 1, 0xFFFFFF, 0.7F,
                          FALSE, bootsProc, (void *)2);
     item->tooltip = strBootsUltra;
 
     s32 hammerX = 1;
     s32 hammerY = 5;
-    item = menuAddSwitch(menu, hammerX, hammerY, texHammerNormal, 0, 0, 0xFFFFFF, texHammerNormal, 0, 1, 0xFFFFFF, 0.7f,
+    item = menuAddSwitch(menu, hammerX, hammerY, texHammerNormal, 0, 0, 0xFFFFFF, texHammerNormal, 0, 1, 0xFFFFFF, 0.7F,
                          FALSE, hammerProc, (void *)0);
     item->tooltip = strHammerNormal;
     item = menuAddSwitch(menu, hammerX + 3, hammerY, texHammerSuper, 0, 0, 0xFFFFFF, texHammerSuper, 0, 1, 0xFFFFFF,
-                         0.7f, FALSE, hammerProc, (void *)1);
+                         0.7F, FALSE, hammerProc, (void *)1);
     item->tooltip = strHammerSuper;
     item = menuAddSwitch(menu, hammerX + 6, hammerY, texHammerUltra, 0, 0, 0xFFFFFF, texHammerUltra, 0, 1, 0xFFFFFF,
-                         0.7f, FALSE, hammerProc, (void *)2);
+                         0.7F, FALSE, hammerProc, (void *)2);
     item->tooltip = strHammerUltra;
 }
 
@@ -251,7 +251,7 @@ static void createStatsMenu(struct Menu *menu) {
 
     s32 hpX = 1;
     s32 hpY = 2;
-    menuAddStaticIcon(menu, hpX, hpY, texHeart, 0, 0xFFFFFF, 1.0f);
+    menuAddStaticIcon(menu, hpX, hpY, texHeart, 0, 0xFFFFFF, 1.0F);
     item = menuAddIntinput(menu, hpX + 2, hpY, 10, 2, menuByteModProc, &pm_gPlayerData.curHP);
     item->tooltip = strHp;
     menuAddStatic(menu, hpX + 4, hpY, "/", 0xC0C0C0);
@@ -260,7 +260,7 @@ static void createStatsMenu(struct Menu *menu) {
 
     s32 fpX = 1;
     s32 fpY = 4;
-    menuAddStaticIcon(menu, fpX, fpY, texFlower, 0, 0xFFFFFF, 1.0f);
+    menuAddStaticIcon(menu, fpX, fpY, texFlower, 0, 0xFFFFFF, 1.0F);
     item = menuAddIntinput(menu, fpX + 2, fpY, 10, 2, menuByteModProc, &pm_gPlayerData.curFP);
     item->tooltip = strFp;
     menuAddStatic(menu, fpX + 4, fpY, "/", 0xC0C0C0);
@@ -269,38 +269,38 @@ static void createStatsMenu(struct Menu *menu) {
 
     s32 bpX = 1;
     s32 bpY = 6;
-    menuAddStaticIcon(menu, bpX, bpY, texBpIcon, 0, 0xFFFFFF, 1.0f);
+    menuAddStaticIcon(menu, bpX, bpY, texBpIcon, 0, 0xFFFFFF, 1.0F);
     item = menuAddIntinput(menu, bpX + 2, bpY, 10, 2, menuByteModProc, &pm_gPlayerData.maxBP);
     item->tooltip = strBp;
 
     s32 coinX = 10;
     s32 coinY = 2;
-    menuAddStaticIcon(menu, coinX, coinY, texCoin, 0, 0xFFFFFF, 1.0f);
+    menuAddStaticIcon(menu, coinX, coinY, texCoin, 0, 0xFFFFFF, 1.0F);
     item = menuAddIntinput(menu, coinX + 2, coinY, 10, 3, menuHalfwordModProc, &pm_gPlayerData.coins);
     item->tooltip = strCoins;
 
     s32 starPieceX = 10;
     s32 starPieceY = 4;
-    menuAddStaticIcon(menu, starPieceX, starPieceY, texStarPiece, 0, 0xFFFFFF, 1.0f);
+    menuAddStaticIcon(menu, starPieceX, starPieceY, texStarPiece, 0, 0xFFFFFF, 1.0F);
     item = menuAddIntinput(menu, starPieceX + 2, starPieceY, 10, 3, menuByteModProc, &pm_gPlayerData.starPieces);
     item->tooltip = strStarPieces;
 
     s32 levelX = 17;
     s32 levelY = 2;
-    menuAddStaticIcon(menu, levelX, levelY, texMarioHead, 0, 0xFFFFFF, 1.0f);
+    menuAddStaticIcon(menu, levelX, levelY, texMarioHead, 0, 0xFFFFFF, 1.0F);
     item = menuAddIntinput(menu, levelX + 2, levelY, 10, 2, menuByteModProc, &pm_gPlayerData.level);
     item->tooltip = strLevel;
 
     s32 starPointX = 17;
     s32 starPointY = 4;
-    menuAddStaticIcon(menu, starPointX, starPointY, texStarPoint, 0, 0xFFFFFF, 1.0f);
+    menuAddStaticIcon(menu, starPointX, starPointY, texStarPoint, 0, 0xFFFFFF, 1.0F);
     item = menuAddIntinput(menu, starPointX + 2, starPointY, 10, 2, menuByteModProc, &pm_gPlayerData.starPoints);
     item->tooltip = strStarPoints;
 
     s32 actionCommandX = 23;
     s32 actionCommandY = 2;
     item = menuAddSwitch(menu, actionCommandX, actionCommandY, texLuckyStar, 0, 0, 0xFFFFFF, texLuckyStar, 0, 1,
-                         0xFFFFFF, 0.7f, FALSE, menuByteSwitchToggleProc, &pm_gPlayerData.hasActionCommands);
+                         0xFFFFFF, 0.7F, FALSE, menuByteSwitchToggleProc, &pm_gPlayerData.hasActionCommands);
     item->tooltip = strActionCommands;
 }
 
@@ -312,7 +312,7 @@ static void createPartyMenu(struct Menu *menu) {
     const s32 colHeight = 4;
     const s32 spacingX = 6;
     const s32 spacingY = 4;
-    const f32 scale = 0.7f;
+    const f32 scale = 0.7F;
 
     struct MenuItem *partners[8];
     struct MenuItem *superRanks[8];
@@ -373,7 +373,7 @@ static void createStarSpiritMenu(struct Menu *menu) {
     const s32 baseY = 2;
     const s32 spacingX = 4;
     const s32 spacingY = 5;
-    const f32 scale = 0.7f;
+    const f32 scale = 0.7F;
 
     struct MenuItem *starSpirits[8];
     struct GfxTexture *texStarSpirits = resourceGet(RES_PMICON_STAR_SPIRITS);

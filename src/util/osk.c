@@ -114,7 +114,7 @@ static void drawShortcut(struct MenuItem *item, struct MenuDrawParams *drawParam
             break;
         }
         struct GfxSprite sprite = {
-            texture, c, 0, x + n * 10, y, 1.f, 1.f,
+            texture, c, 0, x + n * 10, y, 1.F, 1.F,
         };
         gfxModeSet(GFX_MODE_COLOR, GPACK_RGB24A8(inputButtonColor[c], drawParams->alpha));
         gfxSpriteDraw(&sprite);
@@ -221,7 +221,7 @@ static void createOskMenu(void) {
         }
 
         struct GfxTexture *oskIcons = resourceGet(RES_ICON_OSK);
-        item = menuAddButtonIcon(&oskMenu, 0, 8, oskIcons, 0, 0, 0xFFFFFF, 1.0f, spaceProc, NULL);
+        item = menuAddButtonIcon(&oskMenu, 0, 8, oskIcons, 0, 0, 0xFFFFFF, 1.0F, spaceProc, NULL);
         item->navigateProc = navigateProc;
 
         item = menuItemAdd(&oskMenu, 0, 10, NULL, 0xC0C0C0);
