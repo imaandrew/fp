@@ -199,9 +199,10 @@ static s32 getNextPrefixNumber(void) {
             continue;
         }
 
-        s32 curNum;
-        s32 ret = sscanf(dirent->dName, "%ld", &curNum);
-        if (ret == EOF || ret < 1) {
+        char *end;
+        errno = 0;
+        s32 curNum = strtol(dirent->dName, &end, 10);
+        if (end == dirent->dName || errno != 0) {
             continue;
         }
         if (curNum > maxNumFound) {
@@ -216,14 +217,23 @@ static s32 getNextPrefixNumber(void) {
 static void setName(const char *name, bool dirty) {
     gfDirtyName |= dirty;
     if (!name || strlen(name) == 0) {
+        // NOLINTNEXTLINE(clang-analyzer-unix.cstring.NullArg): gfName is set in menu constructor
         strcpy(gfName->text, "untitled");
         gfUntitled = TRUE;
     } else {
         if (gfDirtyName || gfMode != GETFILE_SAVE_PREFIX_INC) {
             strncpy(gfName->text, name, 31);
         } else {
-            s32 ignore, prefixLength;
-            sscanf(name, "%ld%ln", &ignore, &prefixLength);
+            char *end;
+            errno = 0;
+            strtol(name, &end, 10);
+            if (end == name || errno != 0) {
+                strcpy(gfName->text, "untitled");
+                gfUntitled = TRUE;
+                return;
+            }
+
+            s32 prefixLength = end - name;
             s32 prefix = getNextPrefixNumber();
             snprintf(gfName->text, 32, "%03ld%s", prefix, name + prefixLength);
         }
@@ -246,6 +256,10 @@ static s32 overwritePromptProc(s32 optionIndex, void *data) {
 
 static void returnPath(const char *name) {
     char *path = malloc(PATH_MAX);
+    if (!path) {
+        return;
+    }
+
     if (getcwd(path, PATH_MAX)) {
         s32 dl = strlen(path);
         s32 nl = strlen(name);
@@ -522,9 +536,9 @@ static s32 mkdirOskCallbackProc(const char *str, void *data) {
         menuPrompt(&gfMenu, strerror(errno), "return\0", 0, NULL, NULL);
         return 1;
     }
-        menuReturn(&gfMenu);
-        updateView(updateList(), TRUE);
-        return 1;
+    menuReturn(&gfMenu);
+    updateView(updateList(), TRUE);
+    return 1;
 }
 
 static void mkdirProc(struct MenuItem *item, void *data) {
