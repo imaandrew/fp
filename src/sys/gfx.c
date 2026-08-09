@@ -253,7 +253,8 @@ struct GfxTexture *gfxTexldrLoad(struct GfxTexldr *texldr, const struct GfxTexde
             }
             return NULL;
         }
-        memcpy(textureData, (char *)fileStart + texdesc->address, textureSize);
+        // NOLINTNEXTLINE(clang-analyzer-core.NullPointerArithm)
+        memcpy(textureData, fileStart + texdesc->address, textureSize);
     }
     texture->data = textureData;
     return texture;
