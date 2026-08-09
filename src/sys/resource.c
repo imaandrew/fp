@@ -102,8 +102,8 @@ static void *rcFontPixelzim(void) {
 }
 
 static s32 hudScriptToTexdesc(struct GfxTexdesc *tdOut, const u32 *hudScript, u32 vaddrOffset, s8 palCount) {
-    g_ifmt_t im_fmt = G_IM_FMT_RGBA;
-    g_isiz_t im_siz = G_IM_SIZ_32b;
+    g_ifmt_t imFmt = G_IM_FMT_RGBA;
+    g_isiz_t imSiz = G_IM_SIZ_32b;
     u32 address = UINT32_MAX;
     s16 tileWidth = 0;
     s16 tileHeight = 0;
@@ -116,8 +116,8 @@ static s32 hudScriptToTexdesc(struct GfxTexdesc *tdOut, const u32 *hudScript, u3
             case HUD_ELEMENT_OP_End: scriptDone = TRUE; break;
             case HUD_ELEMENT_OP_SetCI:
                 if (address == UINT32_MAX) {
-                    im_fmt = G_IM_FMT_CI;
-                    im_siz = G_IM_SIZ_4b;
+                    imFmt = G_IM_FMT_CI;
+                    imSiz = G_IM_SIZ_4b;
                     scriptPos++;
                     address = *scriptPos++;
                     scriptPos++;
@@ -127,8 +127,8 @@ static s32 hudScriptToTexdesc(struct GfxTexdesc *tdOut, const u32 *hudScript, u3
                 break;
             case HUD_ELEMENT_OP_SetImage:
                 if (address == UINT32_MAX) {
-                    im_fmt = G_IM_FMT_CI;
-                    im_siz = G_IM_SIZ_4b;
+                    imFmt = G_IM_FMT_CI;
+                    imSiz = G_IM_SIZ_4b;
                     scriptPos++;
                     address = *scriptPos++;
                     scriptPos += 3;
@@ -137,8 +137,8 @@ static s32 hudScriptToTexdesc(struct GfxTexdesc *tdOut, const u32 *hudScript, u3
                 }
                 break;
             case HUD_ELEMENT_OP_UseIA8:
-                im_fmt = G_IM_FMT_IA;
-                im_siz = G_IM_SIZ_8b;
+                imFmt = G_IM_FMT_IA;
+                imSiz = G_IM_SIZ_8b;
                 break;
             case HUD_ELEMENT_OP_SetRGBA:
                 if (address == UINT32_MAX) {
@@ -188,11 +188,11 @@ static s32 hudScriptToTexdesc(struct GfxTexdesc *tdOut, const u32 *hudScript, u3
         fileVsize = 0;
     } else {
         fileVaddr = address + vaddrOffset;
-        fileVsize = VSIZE(tileWidth, tileHeight, im_siz, palCount, 1);
+        fileVsize = VSIZE(tileWidth, tileHeight, imSiz, palCount, 1);
     }
 
     *tdOut = (struct GfxTexdesc){
-        im_fmt, im_siz, address, tileWidth, tileHeight, 1, 1, fileVaddr, fileVsize, palCount,
+        imFmt, imSiz, address, tileWidth, tileHeight, 1, 1, fileVaddr, fileVsize, palCount,
     };
     return 1;
 }
@@ -347,16 +347,16 @@ struct GfxTexture *resourceLoadPmiconItem(u16 item, bool safe) {
         if (safe) {
             return gfxTextureLoad(&td, NULL);
         }
-            for (s32 i = 0; i < ARRAY_LENGTH(itemTextures); i++) {
-                if (itemTextures[i].vaddr == td.fileVaddr) {
-                    itemTextures[item].vaddr = td.fileVaddr;
-                    itemTextures[item].texture = itemTextures[i].texture;
-                    return itemTextures[item].texture;
-                }
+        for (s32 i = 0; i < ARRAY_LENGTH(itemTextures); i++) {
+            if (itemTextures[i].vaddr == td.fileVaddr) {
+                itemTextures[item].vaddr = td.fileVaddr;
+                itemTextures[item].texture = itemTextures[i].texture;
+                return itemTextures[item].texture;
             }
-            itemTextures[item].texture = gfxTextureLoad(&td, NULL);
-            itemTextures[item].vaddr = td.fileVaddr;
-            return itemTextures[item].texture;
+        }
+        itemTextures[item].texture = gfxTextureLoad(&td, NULL);
+        itemTextures[item].vaddr = td.fileVaddr;
+        return itemTextures[item].texture;
     }
     return NULL;
 }

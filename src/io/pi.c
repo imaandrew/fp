@@ -66,13 +66,13 @@ static void dmaWrite(u32 devAddr, u32 ramAddr, size_t size) {
 
     OSMesgQueue mq;
     OSMesg m;
-    __OSEventState pi_event;
+    __OSEventState piEvent;
 
     s32 irqf = getIrqf();
     if (irqf) {
         osCreateMesgQueue(&mq, &m, 1);
 
-        pi_event = __osEventStateTab[OS_EVENT_PI];
+        piEvent = __osEventStateTab[OS_EVENT_PI];
         __osEventStateTab[OS_EVENT_PI].messageQueue = &mq;
     }
 
@@ -84,7 +84,7 @@ static void dmaWrite(u32 devAddr, u32 ramAddr, size_t size) {
     if (irqf) {
         osRecvMesg(&mq, NULL, OS_MESG_BLOCK);
 
-        __osEventStateTab[OS_EVENT_PI] = pi_event;
+        __osEventStateTab[OS_EVENT_PI] = piEvent;
     } else {
         __piWait();
         pi_regs.status = PI_STATUS_CLR_INTR;
@@ -98,13 +98,13 @@ static void dmaRead(u32 devAddr, u32 ramAddr, size_t size) {
 
     OSMesgQueue mq;
     OSMesg m;
-    __OSEventState pi_event;
+    __OSEventState piEvent;
 
     s32 irqf = getIrqf();
     if (irqf) {
         osCreateMesgQueue(&mq, &m, 1);
 
-        pi_event = __osEventStateTab[OS_EVENT_PI];
+        piEvent = __osEventStateTab[OS_EVENT_PI];
         __osEventStateTab[OS_EVENT_PI].messageQueue = &mq;
     }
 
@@ -116,7 +116,7 @@ static void dmaRead(u32 devAddr, u32 ramAddr, size_t size) {
     if (irqf) {
         osRecvMesg(&mq, NULL, OS_MESG_BLOCK);
 
-        __osEventStateTab[OS_EVENT_PI] = pi_event;
+        __osEventStateTab[OS_EVENT_PI] = piEvent;
     } else {
         __piWait();
         pi_regs.status = PI_STATUS_CLR_INTR;
