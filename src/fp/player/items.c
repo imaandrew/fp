@@ -500,20 +500,17 @@ static void itemListButtonProc(struct MenuItem *item, void *data) {
             }
             break;
     }
-    return;
 }
 
 static void itemSelectionButtonProc(struct MenuItem *item, void *data) {
     s16 itemId = (u32)data;
     *itemSlotToUpdate = itemId;
     menuReturn(&itemSelectionMenu);
-    return;
 }
 
 static void itemDeleteButtonProc(struct MenuItem *item, void *data) {
     *itemSlotToUpdate = 0;
     menuReturn(&itemSelectionMenu);
-    return;
 }
 
 static void createItemSelectionPage(struct Menu *page, const char *title, struct GfxTexture *itemTextureList[],

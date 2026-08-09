@@ -14,8 +14,6 @@ static void areaPrevProc(struct MenuItem *item, void *data) {
     } else {
         area--;
     }
-
-    return;
 }
 
 static void areaNextProc(struct MenuItem *item, void *data) {
@@ -24,8 +22,6 @@ static void areaNextProc(struct MenuItem *item, void *data) {
     } else {
         area++;
     }
-
-    return;
 }
 
 static void mapPrevProc(struct MenuItem *item, void *data) {
@@ -34,8 +30,6 @@ static void mapPrevProc(struct MenuItem *item, void *data) {
     } else {
         map--;
     }
-
-    return;
 }
 
 static void mapNextProc(struct MenuItem *item, void *data) {
@@ -44,8 +38,6 @@ static void mapNextProc(struct MenuItem *item, void *data) {
     } else {
         map++;
     }
-
-    return;
 }
 
 static void entrancePrevProc(struct MenuItem *item, void *data) {
@@ -54,8 +46,6 @@ static void entrancePrevProc(struct MenuItem *item, void *data) {
     } else {
         entrance--;
     }
-
-    return;
 }
 
 static void entranceNextProc(struct MenuItem *item, void *data) {
@@ -64,8 +54,6 @@ static void entranceNextProc(struct MenuItem *item, void *data) {
     } else {
         entrance++;
     }
-
-    return;
 }
 
 static s32 warpInfoDrawProc(struct MenuItem *item, struct MenuDrawParams *drawParams) {
