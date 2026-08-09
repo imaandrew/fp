@@ -145,14 +145,13 @@ s32 fpImportFile(const char *path, void *data) {
     if (errStr) {
         menuPrompt(fp.mainMenu, errStr, "return\0", 0, NULL, NULL);
         return 1;
-    } else {
+    }
         if (fp.lastImportedSavePath == NULL) {
             fp.lastImportedSavePath = malloc(PATH_MAX);
         }
         strcpy(fp.lastImportedSavePath, path);
         fpLog("external save loaded");
         return 0;
-    }
 }
 
 static void exportFileProc(struct MenuItem *item, void *data) {

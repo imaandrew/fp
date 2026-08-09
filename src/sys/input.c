@@ -138,19 +138,19 @@ void inputUpdate(void) {
                 if (*cs & csm) {
                     if (pad & (1 << c)) {
                         continue;
-                    } else {
+                    }
                         if (*cs & ~((1 << (j + 1)) - 1)) {
                             *cs = 0;
                         } else {
                             *cs &= ~csm;
                         }
                         break;
-                    }
                 }
                 if ((padReleased & (1 << c)) || (css != 0 && (padPressedRaw & ~bindPad[i]))) {
                     *cs = 0;
                     break;
-                } else if (padPressedRaw & (1 << c)) {
+                }
+                if (padPressedRaw & (1 << c)) {
                     *cs |= csm;
                 } else {
                     break;
@@ -192,33 +192,29 @@ s8 inputY(void) {
 pm_Controller inputPad(void) {
     if (inputEnabled) {
         return PAD_TO_CONTROLLER(pad);
-    } else {
-        return PAD_TO_CONTROLLER(0);
     }
+    return PAD_TO_CONTROLLER(0);
 }
 
 pm_Controller inputPressedRaw(void) {
     if (inputEnabled) {
         return PAD_TO_CONTROLLER(padPressedRaw);
-    } else {
-        return PAD_TO_CONTROLLER(0);
     }
+    return PAD_TO_CONTROLLER(0);
 }
 
 pm_Controller inputPressed(void) {
     if (inputEnabled) {
         return PAD_TO_CONTROLLER(padPressed);
-    } else {
-        return PAD_TO_CONTROLLER(0);
     }
+    return PAD_TO_CONTROLLER(0);
 }
 
 pm_Controller inputReleased(void) {
     if (inputEnabled) {
         return PAD_TO_CONTROLLER(padReleased);
-    } else {
-        return PAD_TO_CONTROLLER(0);
     }
+    return PAD_TO_CONTROLLER(0);
 }
 
 void inputReserve(u16 bitmask) {

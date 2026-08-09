@@ -22,20 +22,19 @@ static s32 adjustJoystick(s32 v) {
     if (v < 0) {
         if (v > -8) {
             return 0;
-        } else if (v < -66) {
-            return -60;
-        } else {
-            return v + 7;
         }
-    } else {
+        if (v < -66) {
+            return -60;
+        }
+        return v + 7;
+    }
         if (v < 8) {
             return 0;
-        } else if (v > 66) {
-            return 60;
-        } else {
-            return v - 7;
-        }
     }
+    if (v > 66) {
+            return 60;
+    }
+    return v - 7;
 }
 
 static void camManual(void) {

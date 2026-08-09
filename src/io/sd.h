@@ -175,9 +175,8 @@ static inline u32 swfnSel(const void *dat, s32 group) {
     p += 17 - ((group + 1) >> 1);
     if (group & 1) {
         return *p & 0xF;
-    } else {
-        return *p >> 4;
     }
+    return *p >> 4;
 }
 
 static inline u32 swfnVer(const void *dat) {

@@ -61,12 +61,11 @@ static struct FatPath *getOrigin(const char *path, const char **tail) {
             *tail = &path[1];
         }
         return NULL;
-    } else {
-        if (tail) {
-            *tail = path;
-        }
-        return wd;
     }
+    if (tail) {
+        *tail = path;
+    }
+    return wd;
 }
 
 static int wdFind(const char *path, struct FatEntry *entry) {
@@ -490,9 +489,8 @@ int rename(const char *oldPath, const char *newPath) {
     }
     if (r == 0) {
         return fatFlush(&fat);
-    } else {
-        return r;
     }
+    return r;
 }
 
 int chmod(const char *path, mode_t mode) {

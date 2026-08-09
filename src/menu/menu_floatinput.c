@@ -21,7 +21,8 @@ struct ItemData {
 static inline s32 charToInt(s32 x) {
     if (x >= '0' && x <= '9') {
         return x - ('0' - 0x0);
-    } else if (x >= 'a' && x <= 'f') {
+    }
+    if (x >= 'a' && x <= 'f') {
         return x - ('a' - 0xA);
     }
     return -1;
@@ -30,7 +31,8 @@ static inline s32 charToInt(s32 x) {
 static inline s32 intToChar(s32 x) {
     if (x >= 0x0 && x <= 0x9) {
         return x + ('0' - 0x0);
-    } else if (x >= 0xA && x <= 0xF) {
+    }
+    if (x >= 0xA && x <= 0xF) {
         return x + ('a' - 0xA);
     }
     return -1;

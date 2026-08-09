@@ -11,9 +11,8 @@ static s32 doCallback(s32 index) {
         MenuPromptCallback proc = promptCallbackProc;
         promptCallbackProc = NULL;
         return proc(index, promptCallbackData);
-    } else {
-        return 0;
     }
+    return 0;
 }
 
 static s32 leaveProc(struct MenuItem *item, enum MenuSwitchReason reason) {

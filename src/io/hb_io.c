@@ -11,9 +11,8 @@
 static s32 hbCheck(void) {
     if (hb_regs.key == 0x1234) {
         return 0;
-    } else {
-        return -1;
     }
+    return -1;
 }
 
 static s32 hbSdInit(void) {
@@ -25,9 +24,8 @@ static s32 hbSdInit(void) {
     u32 status = hb_regs.status;
     if ((status & HB_STATUS_SD_READY) && (status & HB_STATUS_SD_INSERTED)) {
         return 0;
-    } else {
-        return -1;
     }
+    return -1;
 }
 
 static s32 hbSdRead(size_t lba, size_t nBlocks, void *dst) {
@@ -40,9 +38,8 @@ static s32 hbSdRead(size_t lba, size_t nBlocks, void *dst) {
 
     if (hb_regs.status & HB_STATUS_ERROR) {
         return -1;
-    } else {
-        return 0;
     }
+    return 0;
 }
 
 static s32 hbSdWrite(size_t lba, size_t nBlocks, const void *src) {
@@ -56,23 +53,21 @@ static s32 hbSdWrite(size_t lba, size_t nBlocks, const void *src) {
 
         if (hb_regs.status & HB_STATUS_ERROR) {
             return -1;
-        } else {
-            return 0;
         }
-    } else {
-        char data[512] = {0};
-
-        while (nBlocks != 0) {
-            if (hbSdWrite(lba, 1, data)) {
-                return -1;
-            }
-
-            nBlocks--;
-            lba++;
-        }
-
         return 0;
     }
+    char data[512] = {0};
+
+    while (nBlocks != 0) {
+        if (hbSdWrite(lba, 1, data)) {
+            return -1;
+        }
+
+        nBlocks--;
+        lba++;
+    }
+
+    return 0;
 }
 
 static s32 hbReset(u32 dramSaveAddr, u32 dramSaveLen) {

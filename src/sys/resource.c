@@ -345,7 +345,7 @@ struct GfxTexture *resourceLoadPmiconItem(u16 item, bool safe) {
     if (hudScriptToTexdesc(&td, scriptEnabled, ICONS_ITEMS_ROM_START, palCount)) {
         if (safe) {
             return gfxTextureLoad(&td, NULL);
-        } else {
+        }
             for (s32 i = 0; i < ARRAY_LENGTH(itemTextures); i++) {
                 if (itemTextures[i].vaddr == td.fileVaddr) {
                     itemTextures[item].vaddr = td.fileVaddr;
@@ -356,7 +356,6 @@ struct GfxTexture *resourceLoadPmiconItem(u16 item, bool safe) {
             itemTextures[item].texture = gfxTextureLoad(&td, NULL);
             itemTextures[item].vaddr = td.fileVaddr;
             return itemTextures[item].texture;
-        }
     }
     return NULL;
 }

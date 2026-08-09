@@ -89,7 +89,8 @@ static bool charIsSfn(char c, enum SfnCase *cse) {
         if (cse) {
             if (*cse == SFN_CASE_LOWER) {
                 return 0;
-            } else if (*cse == SFN_CASE_ANY) {
+            }
+            if (*cse == SFN_CASE_ANY) {
                 *cse = SFN_CASE_UPPER;
             }
         }
@@ -98,7 +99,8 @@ static bool charIsSfn(char c, enum SfnCase *cse) {
         if (cse) {
             if (*cse == SFN_CASE_UPPER) {
                 return 0;
-            } else if (*cse == SFN_CASE_ANY) {
+            }
+            if (*cse == SFN_CASE_ANY) {
                 *cse = SFN_CASE_LOWER;
             }
         }
@@ -933,10 +935,9 @@ static u32 clustRw(struct FatFile *file, enum FatRw rw, void *buf, u32 nClust, b
                 *eof = TRUE;
             }
             break;
-        } else {
+        }
             file->pClust = clust;
             p += nByte;
-        }
     }
     return nCopy;
 }
@@ -984,9 +985,8 @@ u32 fatRw(struct FatFile *file, enum FatRw rw, void *buf, u32 nByte, struct FatF
             nCopy += nByteClust;
             if (nCopyClust != nClust || ate) {
                 break;
-            } else {
-                continue;
             }
+                continue;
         }
         /* compute chunk size */
         u32 chunkSize = fat->nSectByte - pos.pSectOff;
@@ -1419,9 +1419,8 @@ struct FatPath *fatPath(struct Fat *fat, struct FatPath *dirFp, const char *path
 struct FatEntry *fatPathTarget(struct FatPath *fp) {
     if (fp) {
         return fp->entList.last;
-    } else {
-        return NULL;
     }
+        return NULL;
 }
 
 /* return the directory entry which contains the target entry of a path */
@@ -1462,13 +1461,14 @@ static s32 generateSfn(struct Fat *fat, u32 clust, const char *lfn, char *sfn) {
         s32 e = errno;
         if (dirFind(fat, clust, nameBuf, NULL) == 0) {
             continue;
-        } else if (errno != ENOENT) {
+        }
+        if (errno != ENOENT) {
             return -1;
         }
         errno = e;
         /* return name with discriminator */
         sfn[sfnNdLength] = '~';
-        memcpy(&sfn[sfnNdLength + 1], sfnDisc, sfnDiscLength);
+        strcpy(&sfn[sfnNdLength + 1], sfnDisc);
         return 0;
     }
     errno = EEXIST;

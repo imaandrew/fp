@@ -146,9 +146,8 @@ static void stackInit(struct vector *stack) {
 static struct Tok *stackPeek(struct vector *stack) {
     if (stack->size == 0) {
         return NULL;
-    } else {
-        return vector_at(stack, stack->size - 1);
     }
+    return vector_at(stack, stack->size - 1);
 }
 
 static bool stackPush(struct vector *stack, struct Tok *tok) {
@@ -180,10 +179,11 @@ enum AdexError adexParse(struct Adex *adex, const char *str) {
             continue;
         }
         /* parse comment and end-of-line */
-        else if (c == '#' || c == '\r' || c == '\n') {
+        if (c == '#' || c == '\r' || c == '\n') {
             break;
             /* parse operator */
-        } else if (parseOp(&p, &op)) {
+        }
+        if (parseOp(&p, &op)) {
             makeTok(&tok, TOK_OP, op);
             /* parse constant */
         } else if (c >= '0' && c <= '9') {

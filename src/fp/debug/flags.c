@@ -71,9 +71,11 @@ static void addEvent(s32 recordIndex, s32 flagIndex, bool value) {
 static u32 getFlagWord(void *data, size_t wordSize, s32 index) {
     if (wordSize == 1) {
         return ((u8 *)data)[index];
-    } else if (wordSize == 2) {
+    }
+    if (wordSize == 2) {
         return ((u16 *)data)[index];
-    } else if (wordSize == 4) {
+    }
+    if (wordSize == 4) {
         return ((u32 *)data)[index];
     }
     return 0;

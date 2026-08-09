@@ -41,13 +41,11 @@ s32 diskInit(void) {
         if (currentDev->diskInit()) {
             errno = ENODEV;
             return -1;
-        } else {
-            return 0;
         }
-    } else {
-        errno = ENODEV;
-        return -1;
+        return 0;
     }
+    errno = ENODEV;
+    return -1;
 }
 
 s32 diskRead(size_t lba, size_t nBlocks, void *dst) {
@@ -55,13 +53,11 @@ s32 diskRead(size_t lba, size_t nBlocks, void *dst) {
         if (currentDev->diskRead(lba, nBlocks, dst)) {
             errno = EIO;
             return -1;
-        } else {
-            return 0;
         }
-    } else {
-        errno = ENODEV;
-        return -1;
+        return 0;
     }
+    errno = ENODEV;
+    return -1;
 }
 
 s32 diskWrite(size_t lba, size_t nBlocks, const void *src) {
@@ -69,22 +65,19 @@ s32 diskWrite(size_t lba, size_t nBlocks, const void *src) {
         if (currentDev->diskWrite(lba, nBlocks, src)) {
             errno = EIO;
             return -1;
-        } else {
-            return 0;
         }
-    } else {
-        errno = ENODEV;
-        return -1;
+        return 0;
     }
+    errno = ENODEV;
+    return -1;
 }
 
 s32 fifoPoll(void) {
     if (currentDev && currentDev->fifoPoll) {
         return currentDev->fifoPoll();
-    } else {
-        errno = ENODEV;
-        return 0;
     }
+    errno = ENODEV;
+    return 0;
 }
 
 s32 fifoRead(void *dst, size_t nBlocks) {
@@ -92,13 +85,11 @@ s32 fifoRead(void *dst, size_t nBlocks) {
         if (currentDev->fifoRead(dst, nBlocks)) {
             errno = EIO;
             return -1;
-        } else {
-            return 0;
         }
-    } else {
-        errno = ENODEV;
-        return -1;
+        return 0;
     }
+    errno = ENODEV;
+    return -1;
 }
 
 s32 fifoWrite(const void *src, size_t nBlocks) {
@@ -106,29 +97,25 @@ s32 fifoWrite(const void *src, size_t nBlocks) {
         if (currentDev->fifoWrite(src, nBlocks)) {
             errno = EIO;
             return -1;
-        } else {
-            return 0;
         }
-    } else {
-        errno = ENODEV;
-        return -1;
+        return 0;
     }
+    errno = ENODEV;
+    return -1;
 }
 
 u32 clockTicks(void) {
     if (currentDev && currentDev->clockTicks) {
         return currentDev->clockTicks();
-    } else {
-        return clockTicksDflt();
     }
+    return clockTicksDflt();
 }
 
 u32 clockFreq(void) {
     if (currentDev && currentDev->clockFreq) {
         return currentDev->clockFreq();
-    } else {
-        return clockFreqDflt();
     }
+    return clockFreqDflt();
 }
 
 // s32 cpu_reset(void)

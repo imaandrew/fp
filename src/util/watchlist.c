@@ -322,9 +322,8 @@ s32 watchlistAdd(struct MenuItem *item, u32 address, enum WatchType type) {
     s32 pos = list->members.size;
     if (addMember(list, address, type, pos, TRUE, 0, 0, FALSE)) {
         return pos;
-    } else {
-        return -1;
     }
+    return -1;
 }
 
 void watchlistStore(struct MenuItem *item) {

@@ -59,9 +59,8 @@ static s32 navigateProc(struct MenuItem *item, enum MenuNavigation nav) {
             }
         }
         return 1;
-    } else {
-        return 0;
     }
+    return 0;
 }
 
 static s32 activateTextProc(struct MenuItem *item) {
@@ -74,22 +73,21 @@ static s32 activateTextProc(struct MenuItem *item) {
 static s32 navigateTextProc(struct MenuItem *item, enum MenuNavigation nav) {
     if (navigateProc(item, nav)) {
         return 1;
-    } else {
-        switch (nav) {
-            case MENU_NAVIGATE_LEFT: {
-                if (oskCursorPos > 0) {
-                    --oskCursorPos;
-                }
-                return 1;
+    }
+    switch (nav) {
+        case MENU_NAVIGATE_LEFT: {
+            if (oskCursorPos > 0) {
+                --oskCursorPos;
             }
-            case MENU_NAVIGATE_RIGHT: {
-                if (oskCursorPos < strlen(oskBuf)) {
-                    ++oskCursorPos;
-                }
-                return 1;
-            }
-            default: return 0;
+            return 1;
         }
+        case MENU_NAVIGATE_RIGHT: {
+            if (oskCursorPos < strlen(oskBuf)) {
+                ++oskCursorPos;
+            }
+            return 1;
+        }
+        default: return 0;
     }
 }
 

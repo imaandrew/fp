@@ -90,69 +90,83 @@ static void crc16Wide(const void *data, s32 size, u16 (*crcBuf)[4]) {
 static s32 csErr(u32 cs) {
     if ((cs & CS_ERR_BITS) == 0) {
         return 0;
-    } else if (cs & CS_CC_ERROR) {
-        return -SD_ERR_CC;
-    } else if (cs & CS_CARD_ECC_FAILED) {
-        return -SD_ERR_ECC;
-    } else if (cs & CS_ILLEGAL_COMMAND) {
-        return -SD_ERR_ILCMD;
-    } else if (cs & CS_COM_CRC_ERROR) {
-        return -SD_ERR_CRC;
-    } else if (cs & (CS_WP_ERASE_SKIP | CS_CSD_OVERWRITE | CS_LOCK_UNLOCK_FAILED | CS_WP_VIOLATION)) {
-        return -SD_ERR_WPVIOL;
-    } else if (cs & CS_ERASE_SEQ_ERROR) {
-        return -SD_ERR_ERSEQ;
-    } else if (cs & (CS_BLOCK_LEN_ERROR | CS_ERASE_PARAM)) {
-        return -SD_ERR_PARAM;
-    } else if (cs & CS_ADDRESS_ERROR) {
-        return -SD_ERR_ADDR;
-    } else if (cs & CS_OUT_OF_RANGE) {
-        return -SD_ERR_RANGE;
-    } else {
-        return -SD_ERR_GEN;
     }
+    if (cs & CS_CC_ERROR) {
+        return -SD_ERR_CC;
+    }
+    if (cs & CS_CARD_ECC_FAILED) {
+        return -SD_ERR_ECC;
+    }
+    if (cs & CS_ILLEGAL_COMMAND) {
+        return -SD_ERR_ILCMD;
+    }
+    if (cs & CS_COM_CRC_ERROR) {
+        return -SD_ERR_CRC;
+    }
+    if (cs & (CS_WP_ERASE_SKIP | CS_CSD_OVERWRITE | CS_LOCK_UNLOCK_FAILED | CS_WP_VIOLATION)) {
+        return -SD_ERR_WPVIOL;
+    }
+    if (cs & CS_ERASE_SEQ_ERROR) {
+        return -SD_ERR_ERSEQ;
+    }
+    if (cs & (CS_BLOCK_LEN_ERROR | CS_ERASE_PARAM)) {
+        return -SD_ERR_PARAM;
+    }
+    if (cs & CS_ADDRESS_ERROR) {
+        return -SD_ERR_ADDR;
+    }
+    if (cs & CS_OUT_OF_RANGE) {
+        return -SD_ERR_RANGE;
+    }
+    return -SD_ERR_GEN;
 }
 
 static s32 wrTokErr(s32 tok) {
     if (tok == DAT_RESP_OK) {
         return 0;
-    } else if (tok == DAT_RESP_CRC_ERR) {
-        return -SD_ERR_CRC;
-    } else if (tok == DAT_RESP_WR_ERR) {
-        return -SD_ERR_CC;
-    } else {
-        return -SD_ERR_GEN;
     }
+    if (tok == DAT_RESP_CRC_ERR) {
+        return -SD_ERR_CRC;
+    }
+    if (tok == DAT_RESP_WR_ERR) {
+        return -SD_ERR_CC;
+    }
+    return -SD_ERR_GEN;
 }
 
 static s32 spiR1Err(s32 r1) {
     if ((r1 & SPI_R1_ERR_BITS) == 0) {
         return 0;
-    } else if (r1 & SPI_R1_ILLEGAL_CMD) {
-        return -SD_ERR_ILCMD;
-    } else if (r1 & SPI_R1_CRC_ERR) {
-        return -SD_ERR_CRC;
-    } else if (r1 & SPI_R1_ERASE_SEQ_ERR) {
-        return -SD_ERR_ERSEQ;
-    } else if (r1 & SPI_R1_ADDR_ERR) {
-        return -SD_ERR_ADDR;
-    } else if (r1 & SPI_R1_PARAM_ERR) {
-        return -SD_ERR_PARAM;
-    } else {
-        return -SD_ERR_GEN;
     }
+    if (r1 & SPI_R1_ILLEGAL_CMD) {
+        return -SD_ERR_ILCMD;
+    }
+    if (r1 & SPI_R1_CRC_ERR) {
+        return -SD_ERR_CRC;
+    }
+    if (r1 & SPI_R1_ERASE_SEQ_ERR) {
+        return -SD_ERR_ERSEQ;
+    }
+    if (r1 & SPI_R1_ADDR_ERR) {
+        return -SD_ERR_ADDR;
+    }
+    if (r1 & SPI_R1_PARAM_ERR) {
+        return -SD_ERR_PARAM;
+    }
+    return -SD_ERR_GEN;
 }
 
 static s32 spiRdTokErr(s32 tok) {
     if (tok & SPI_BLK_RANGE_ERR) {
         return -SD_ERR_RANGE;
-    } else if (tok & SPI_BLK_ECC_ERR) {
-        return -SD_ERR_ECC;
-    } else if (tok & SPI_BLK_CC_ERR) {
-        return -SD_ERR_CC;
-    } else {
-        return -SD_ERR_GEN;
     }
+    if (tok & SPI_BLK_ECC_ERR) {
+        return -SD_ERR_ECC;
+    }
+    if (tok & SPI_BLK_CC_ERR) {
+        return -SD_ERR_CC;
+    }
+    return -SD_ERR_GEN;
 }
 
 static void setSpd(struct SdHost *host, s32 spd) {
@@ -210,9 +224,8 @@ static s32 cardCmdSd(struct SdHost *host, s32 cmd, const u8 *txBuf, u8 *rxBuf) {
     /* check respone status */
     if (respType == R1) {
         return csErr(sdR1Cs(rxBuf));
-    } else {
-        return 0;
     }
+    return 0;
 }
 
 static s32 cardCmdSpi(struct SdHost *host, s32 cmd, const u8 *txBuf, u8 *rxBuf) {
@@ -247,9 +260,8 @@ static s32 cardCmdSpi(struct SdHost *host, s32 cmd, const u8 *txBuf, u8 *rxBuf) 
     /* check respone status */
     if (respType != 0) {
         return spiR1Err(rxBuf[0]);
-    } else {
-        return 0;
     }
+    return 0;
 }
 
 static s32 cardCmd(struct SdHost *host, s32 cmd, u32 arg, void *resp) {
@@ -276,9 +288,8 @@ static s32 cardCmd(struct SdHost *host, s32 cmd, u32 arg, void *resp) {
 
     if (host->proto == SD_PROTO_SDBUS) {
         return cardCmdSd(host, cmd, txBuf, rxBuf);
-    } else { /* host->proto == SD_PROTO_SPIBUS */
+    } /* host->proto == SD_PROTO_SPIBUS */
         return cardCmdSpi(host, cmd, txBuf, rxBuf);
-    }
 }
 
 static s32 rxBlkSd(struct SdHost *host, void *buf, size_t blkSize) {
@@ -319,7 +330,8 @@ static s32 rxBlkSpi(struct SdHost *host, void *buf, size_t blkSize) {
 
         if (tok == SPI_BLK_START) {
             break;
-        } else if ((tok & 0xF0) == 0x00) {
+        }
+        if ((tok & 0xF0) == 0x00) {
             return spiRdTokErr(tok);
         }
 
@@ -342,9 +354,8 @@ static s32 rxBlkSpi(struct SdHost *host, void *buf, size_t blkSize) {
 static s32 rxBlk(struct SdHost *host, void *buf, size_t blkSize) {
     if (host->proto == SD_PROTO_SDBUS) {
         return rxBlkSd(host, buf, blkSize);
-    } else { /* host->proto == SD_PROTO_SPIBUS */
+    } /* host->proto == SD_PROTO_SPIBUS */
         return rxBlkSpi(host, buf, blkSize);
-    }
 }
 
 static s32 txBlkSd(struct SdHost *host, const void *buf, size_t blkSize) {
@@ -447,9 +458,8 @@ static s32 txBlkSpi(struct SdHost *host, const void *buf, size_t blkSize) {
 static s32 txBlk(struct SdHost *host, const void *buf, size_t blkSize) {
     if (host->proto == SD_PROTO_SDBUS) {
         return txBlkSd(host, buf, blkSize);
-    } else { /* host->proto == SD_PROTO_SPIBUS */
+    } /* host->proto == SD_PROTO_SPIBUS */
         return txBlkSpi(host, buf, blkSize);
-    }
 }
 
 static s32 stopRd(struct SdHost *host) {
@@ -504,9 +514,8 @@ static s32 stopWrSpi(struct SdHost *host) {
 static s32 stopWr(struct SdHost *host) {
     if (host->proto == SD_PROTO_SDBUS) {
         return stopWrSd(host);
-    } else { /* host->proto == SD_PROTO_SPIBUS */
+    } /* host->proto == SD_PROTO_SPIBUS */
         return stopWrSpi(host);
-    }
 }
 
 static s32 rxMblk(struct SdHost *host, void *buf, size_t blkSize, size_t nBlk) {

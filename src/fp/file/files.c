@@ -371,7 +371,8 @@ static s32 fileNavProc(struct MenuItem *item, enum MenuNavigation nav) {
             }
         }
         return 1;
-    } else if ((row == FILE_VIEW_ROWS - 1 || row == gfDirEntries.container.size - 1) && nav == MENU_NAVIGATE_DOWN) {
+    }
+    if ((row == FILE_VIEW_ROWS - 1 || row == gfDirEntries.container.size - 1) && nav == MENU_NAVIGATE_DOWN) {
         struct DirState *ds = vector_at(&gfDirState, 0);
         ++ds->scroll;
         s32 index = ds->scroll + row;
@@ -461,9 +462,8 @@ static bool dirEntryComp(void *a, void *b) {
     d = (sa - da->name) - (sb - db->name);
     if (d < 0) {
         return TRUE;
-    } else {
-        return FALSE;
     }
+    return FALSE;
 }
 
 static s32 oskCallbackProc(const char *str, void *data) {
@@ -517,14 +517,14 @@ static void scrollDownProc(struct MenuItem *item, void *data) {
 static s32 mkdirOskCallbackProc(const char *str, void *data) {
     if (*str == '\0') {
         return 0;
-    } else if (mkdir(str, S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH)) {
+    }
+    if (mkdir(str, S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH)) {
         menuPrompt(&gfMenu, strerror(errno), "return\0", 0, NULL, NULL);
         return 1;
-    } else {
+    }
         menuReturn(&gfMenu);
         updateView(updateList(), TRUE);
         return 1;
-    }
 }
 
 static void mkdirProc(struct MenuItem *item, void *data) {

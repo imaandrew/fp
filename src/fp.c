@@ -387,9 +387,11 @@ static void fpDrawLog(struct GfxFont *font, s32 cellWidth, s32 cellHeight, u8 me
             free(ent->msg);
             ent->msg = NULL;
             continue;
-        } else if (!settings->log) {
+        }
+        if (!settings->log) {
             continue;
-        } else if (ent->age > fadeBegin) {
+        }
+        if (ent->age > fadeBegin) {
             msgAlpha = 0xFF - (ent->age - fadeBegin) * 0xFF / fadeDuration;
         } else {
             msgAlpha = 0xFF;
