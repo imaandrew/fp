@@ -75,7 +75,7 @@ static u16 acLastValidFrame = 0;
 
 // clippy trainer vars
 static u16 clippyFramesSinceBattle = 0;
-static u8 clippyStatus = 0;
+static enum ClippyStatus clippyStatus = CLIPPY_NONE;
 
 // spin trainer vars
 static enum ActionStates spinPrevActionState = ACTION_STATE_IDLE;
@@ -646,7 +646,7 @@ static void updateSpinTrainer(void) {
         return;
     }
 
-    enum ActionStates actionState = pm_gPlayerStatus.actionState;
+    enum ActionStates actionState = (u8)pm_gPlayerStatus.actionState;
     pm_PlayerSpinState *spinState = &pm_gPlayerSpinState;
 
     // end timing and jump length
