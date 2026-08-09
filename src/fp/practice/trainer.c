@@ -27,8 +27,6 @@ enum ClippyStatus {
     CLIPPY_LATE,
 };
 
-static const char messageForASM[] = "Success";
-
 const static u32 bowserAttacksHallway[] = {
     SCRIPT_BOWSER_HALLWAY_FIRE, SCRIPT_BOWSER_HALLWAY_STOMP, SCRIPT_BOWSER_HALLWAY_CLAW,
     SCRIPT_BOWSER_HALLWAY_WAVE, SCRIPT_BOWSER_HALLWAY_WAVE,
@@ -96,7 +94,7 @@ static struct GfxTexture *spinZButtonTex = NULL;
 
 extern void setACEHook(void);
 
-static s32 getMatrixTotal(void) {
+__attribute__((used)) static s32 getMatrixTotal(void) {
     s32 matrixCount = 0;
 
     for (s32 i = 0; i < 0x60; i++) {
@@ -107,7 +105,7 @@ static s32 getMatrixTotal(void) {
     return matrixCount;
 }
 
-static void clearAllEffectsManual(s32 matrixCount) {
+__attribute__((used)) static void clearAllEffectsManual(s32 matrixCount) {
     s32 var = 0;
 
     if (matrixCount == 0x215) {
