@@ -289,7 +289,7 @@ static s32 cardCmd(struct SdHost *host, s32 cmd, u32 arg, void *resp) {
     if (host->proto == SD_PROTO_SDBUS) {
         return cardCmdSd(host, cmd, txBuf, rxBuf);
     } /* host->proto == SD_PROTO_SPIBUS */
-        return cardCmdSpi(host, cmd, txBuf, rxBuf);
+    return cardCmdSpi(host, cmd, txBuf, rxBuf);
 }
 
 static s32 rxBlkSd(struct SdHost *host, void *buf, size_t blkSize) {
@@ -355,7 +355,7 @@ static s32 rxBlk(struct SdHost *host, void *buf, size_t blkSize) {
     if (host->proto == SD_PROTO_SDBUS) {
         return rxBlkSd(host, buf, blkSize);
     } /* host->proto == SD_PROTO_SPIBUS */
-        return rxBlkSpi(host, buf, blkSize);
+    return rxBlkSpi(host, buf, blkSize);
 }
 
 static s32 txBlkSd(struct SdHost *host, const void *buf, size_t blkSize) {
@@ -459,7 +459,7 @@ static s32 txBlk(struct SdHost *host, const void *buf, size_t blkSize) {
     if (host->proto == SD_PROTO_SDBUS) {
         return txBlkSd(host, buf, blkSize);
     } /* host->proto == SD_PROTO_SPIBUS */
-        return txBlkSpi(host, buf, blkSize);
+    return txBlkSpi(host, buf, blkSize);
 }
 
 static s32 stopRd(struct SdHost *host) {
@@ -515,11 +515,11 @@ static s32 stopWr(struct SdHost *host) {
     if (host->proto == SD_PROTO_SDBUS) {
         return stopWrSd(host);
     } /* host->proto == SD_PROTO_SPIBUS */
-        return stopWrSpi(host);
+    return stopWrSpi(host);
 }
 
 static s32 rxMblk(struct SdHost *host, void *buf, size_t blkSize, size_t nBlk) {
-    s32 ret;
+    s32 ret = 0;
 
     if (host->rxMblk) {
         ret = host->rxMblk(buf, blkSize, nBlk);
@@ -542,7 +542,7 @@ static s32 rxMblk(struct SdHost *host, void *buf, size_t blkSize, size_t nBlk) {
 }
 
 static s32 txMblk(struct SdHost *host, const void *buf, size_t blkSize, size_t nBlk) {
-    s32 ret;
+    s32 ret = 0;
 
     const char *p = buf;
 

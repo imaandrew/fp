@@ -937,8 +937,8 @@ static u32 clustRw(struct FatFile *file, enum FatRw rw, void *buf, u32 nClust, b
             }
             break;
         }
-            file->pClust = clust;
-            p += nByte;
+        file->pClust = clust;
+        p += nByte;
     }
     return nCopy;
 }
@@ -987,7 +987,7 @@ u32 fatRw(struct FatFile *file, enum FatRw rw, void *buf, u32 nByte, struct FatF
             if (nCopyClust != nClust || ate) {
                 break;
             }
-                continue;
+            continue;
         }
         /* compute chunk size */
         u32 chunkSize = fat->nSectByte - pos.pSectOff;
@@ -1421,7 +1421,7 @@ struct FatEntry *fatPathTarget(struct FatPath *fp) {
     if (fp) {
         return fp->entList.last;
     }
-        return NULL;
+    return NULL;
 }
 
 /* return the directory entry which contains the target entry of a path */
@@ -1812,13 +1812,13 @@ struct FatPath *fatCreatePath(struct Fat *fat, struct FatPath *dirFp, const char
     /* seek destination */
     s32 e = errno;
     errno = 0;
-    const char *tail;
+    const char *tail = NULL;
     struct FatPath *destFp = fatPath(fat, dirFp, path, &tail);
     if (errno == 0) {
         errno = EEXIST;
         goto error;
     } else {
-        if (errno == ENOENT && strlen(tail) > 0 && !strchr(tail, '/') && !strchr(tail, '\\')) {
+        if (errno == ENOENT && tail && strlen(tail) > 0 && !strchr(tail, '/') && !strchr(tail, '\\')) {
             errno = e;
         } else {
             goto error;
@@ -1969,7 +1969,7 @@ s32 fatRename(struct Fat *fat, struct FatPath *entryFp, struct FatPath *dirFp, c
     /* seek destination */
     s32 e = errno;
     errno = 0;
-    const char *tail;
+    const char *tail = NULL;
     struct FatPath *destFp = fatPath(fat, dirFp, path, &tail);
     if (errno == 0) {
         /* check for no-op */
@@ -1982,7 +1982,7 @@ s32 fatRename(struct Fat *fat, struct FatPath *entryFp, struct FatPath *dirFp, c
             goto error;
         }
     } else {
-        if (errno == ENOENT && strlen(tail) > 0 && !strchr(tail, '/') && !strchr(tail, '\\')) {
+        if (errno == ENOENT && tail && strlen(tail) > 0 && !strchr(tail, '/') && !strchr(tail, '\\')) {
             errno = e;
         } else {
             goto error;
