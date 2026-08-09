@@ -94,6 +94,7 @@ struct Menu {
 };
 
 enum WatchType {
+    WATCH_TYPE_NONE = -1,
     WATCH_TYPE_U8,
     WATCH_TYPE_S8,
     WATCH_TYPE_X8,

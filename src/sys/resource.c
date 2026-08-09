@@ -172,6 +172,7 @@ static s32 hudScriptToTexdesc(struct GfxTexdesc *tdOut, const u32 *hudScript, u3
             case HUD_ELEMENT_OP_SetPivot: scriptPos += 2; break;
             case HUD_ELEMENT_OP_SetSizesAutoScale:
             case HUD_ELEMENT_OP_SetSizesFixedScale: scriptPos += 3; break;
+            default: break;
         }
     }
     if (address == UINT32_MAX || tileWidth == 0 || tileHeight == 0) {

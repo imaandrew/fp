@@ -79,6 +79,7 @@ static void updateView(void) {
         case 1: width = 2; break;
         case 2: width = 4; break;
         case 4: width = viewFloat ? 14 : 8; break;
+        default: break;
     }
     char *p = viewCellHeader->text;
     for (s32 i = 0; i < MEM_VIEW_COLS; ++i) {
@@ -128,6 +129,7 @@ static s32 cellProc(struct MenuItem *item, enum MenuCallbackReason reason, void 
             }
             break;
         }
+        default: break;
     }
     return 0;
 }
@@ -194,6 +196,7 @@ static s32 dataTypeProc(struct MenuItem *item, enum MenuCallbackReason reason, v
                 viewDataSize = 4;
                 viewFloat = TRUE;
                 break;
+            default: break;
         }
         makeCells(item->owner);
         struct MemDomain *d = vector_at(&domains, viewDomainIndex);

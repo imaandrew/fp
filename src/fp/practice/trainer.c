@@ -529,6 +529,7 @@ static void updateBowserBlockTrainer(void) {
                     bowserCustomScript[7] = bowserAttacksFinal2[bowserAttack];
                     vanillaScript = SCRIPT_BOWSER_FINAL_2_TAKE_TURN;
                     break;
+                default: break;
             }
 
             if (isBowser) {
@@ -739,7 +740,7 @@ static void blockCheckSuccessOrEarly(void) {
 static void updateBlockTrainer(void) {
     if (settings->trainerAcEnabled && pm_gGameStatus.context == CONTEXT_BATTLE) {
         // blocks
-        switch (pm_gBattleStatus.blockResult) {
+        switch ((enum BlockResult)pm_gBattleStatus.blockResult) {
             case BLOCK_EARLY:
             case BLOCK_SUCCESS:
                 acWaitingForMissedBlock = FALSE;
@@ -752,6 +753,7 @@ static void updateBlockTrainer(void) {
                 acBlockFramesLate = 0;
                 pm_gBattleStatus.blockResult = BLOCK_NONE;
                 break;
+            case BLOCK_NONE: break;
         }
         if (acWaitingForMissedBlock) {
             acBlockFramesLate++;
@@ -813,6 +815,8 @@ static void updateClippyTrainer(void) {
             switch (clippyStatus) {
                 case CLIPPY_EARLY: fpLog("early"); break;
                 case CLIPPY_LATE: fpLog("late"); break;
+                case CLIPPY_NONE:
+                case CLIPPY_SUCCESS: break;
             }
             clippyStatus = CLIPPY_NONE;
         } else if (pm_gEncounterState != 3) {

@@ -531,7 +531,7 @@ static bool parseLine(const char *line, const char **errStr) {
     const char *exprS = p;
     /* construct entry */
     struct WatchfileEntry entry;
-    entry.type = -1;
+    entry.type = WATCH_TYPE_NONE;
     for (s32 i = 0; i < sizeof(watchTypeName) / sizeof(*watchTypeName); ++i) {
         s32 l = strlen(watchTypeName[i]);
         if (strncmp(typeS, watchTypeName[i], l) == 0) {
@@ -539,7 +539,7 @@ static bool parseLine(const char *line, const char **errStr) {
             break;
         }
     }
-    if (entry.type == -1) {
+    if (entry.type == WATCH_TYPE_NONE) {
         goto syntax_err;
     }
     enum AdexError e = adexParse(&entry.adex, exprS);
