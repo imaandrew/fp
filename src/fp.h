@@ -97,6 +97,6 @@ struct Menu *createDebugMenu(void);
 struct Menu *createSettingsMenu(void);
 struct Menu *createAboutMenu(void);
 
-#define CHEAT_ACTIVE(cheat) (settings->cheats & (1 << cheat))
+#define CHEAT_ACTIVE(cheat) (settings->cheats & (1 << (cheat)))
 
 #endif

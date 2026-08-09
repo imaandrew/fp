@@ -5,7 +5,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
-#define PAD_TO_CONTROLLER(x) (pm_Controller)(u32) x;
+#define PAD_TO_CONTROLLER(x) (pm_Controller)(u32)(x);
 
 static s8 joyX;
 static s8 joyY;
@@ -139,12 +139,12 @@ void inputUpdate(void) {
                     if (pad & (1 << c)) {
                         continue;
                     }
-                        if (*cs & ~((1 << (j + 1)) - 1)) {
-                            *cs = 0;
-                        } else {
-                            *cs &= ~csm;
-                        }
-                        break;
+                    if (*cs & ~((1 << (j + 1)) - 1)) {
+                        *cs = 0;
+                    } else {
+                        *cs &= ~csm;
+                    }
+                    break;
                 }
                 if ((padReleased & (1 << c)) || (css != 0 && (padPressedRaw & ~bindPad[i]))) {
                     *cs = 0;

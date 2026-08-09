@@ -8,7 +8,7 @@ struct Menu *createAboutMenu(void) {
     s32 y = 0;
     menu.selector = menuAddSubmenu(&menu, 0, y++, NULL, "return");
     menuAddStatic(&menu, 0, y++, "fp version:", 0xC0C0C0);
-    menuAddStatic(&menu, 0, y++, STRINGIFY(FP_VERSION), 0xFF0000);
+    menuAddStatic(&menu, 0, y++, FP_VERSION, 0xFF0000);
     y++;
     menuAddStatic(&menu, 0, y++, "manual:", 0xC0C0C0);
     menuAddStatic(&menu, 0, y++, "https://fp-docs.starhaven.dev/", 0x99C3FF);

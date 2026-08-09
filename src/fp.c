@@ -199,8 +199,8 @@ static void fpDrawVersion(struct GfxFont *font, s32 cellWidth, s32 cellHeight, u
         gfxModePop(GFX_MODE_DROPSHADOW);
 
         gfxModeSet(GFX_MODE_COLOR, GPACK_RGBA8888(0xFF, 0, 0, menuAlpha));
-        gfxPrintf(font, 16, SCREEN_HEIGHT - 35 + cellHeight * 1, STRINGIFY(FP_VERSION));
-        gfxPrintf(font, SCREEN_WIDTH - cellWidth * 21, SCREEN_HEIGHT - 35 + cellHeight * 1, STRINGIFY(URL));
+        gfxPrintf(font, 16, SCREEN_HEIGHT - 35 + cellHeight * 1, FP_VERSION);
+        gfxPrintf(font, SCREEN_WIDTH - cellWidth * 21, SCREEN_HEIGHT - 35 + cellHeight * 1, URL);
     }
 }
 
