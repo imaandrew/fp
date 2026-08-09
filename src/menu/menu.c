@@ -189,6 +189,16 @@ s32 menuThink(struct Menu *menu) {
     return 0;
 }
 
+static u32 itemColor(struct Menu *menu, struct MenuItem *item) {
+    if (item != menu->selector) {
+        return item->color;
+    }
+    if (item->animateHighlight) {
+        return menu->highlightColorAnimated;
+    }
+    return menu->highlightColorStatic;
+}
+
 void menuDraw(struct Menu *menu) {
     if (menu->child) {
         return menuDraw(menu->child);
@@ -212,14 +222,7 @@ void menuDraw(struct Menu *menu) {
             continue;
         }
         struct MenuDrawParams drawParams = {
-            menuItemScreenX(item),
-            menuItemScreenY(item),
-            item->text,
-            font,
-            (item == menu->selector
-                 ? (item->animateHighlight ? menu->highlightColorAnimated : menu->highlightColorStatic)
-                 : item->color),
-            alpha,
+            menuItemScreenX(item), menuItemScreenY(item), item->text, font, itemColor(menu, item), alpha,
         };
         if (item->drawProc && item->drawProc(item, &drawParams)) {
             continue;
@@ -286,8 +289,14 @@ void menuNavigate(struct Menu *menu, enum MenuNavigation nav) {
     if (menu->selector && menu->selector->navigateProc && menu->selector->navigateProc(menu->selector, nav)) {
         return;
     }
-    s32 navX = (nav == MENU_NAVIGATE_LEFT ? -1 : (nav == MENU_NAVIGATE_RIGHT ? 1 : 0));
-    s32 navY = (nav == MENU_NAVIGATE_UP ? -1 : (nav == MENU_NAVIGATE_DOWN ? 1 : 0));
+    s32 navX = 0;
+    s32 navY = 0;
+    switch (nav) {
+        case MENU_NAVIGATE_LEFT: navX = -1; break;
+        case MENU_NAVIGATE_RIGHT: navX = 1; break;
+        case MENU_NAVIGATE_UP: navY = -1; break;
+        case MENU_NAVIGATE_DOWN: navY = 1; break;
+    }
     if (navX == 0 && navY == 0) {
         return;
     }

@@ -360,6 +360,16 @@ void gfxTextureCopyTile(struct GfxTexture *dest, s32 destTile, const struct GfxT
     }
 }
 
+static u8 clampChannel(f32 v) {
+    if (v < 0x00) {
+        return 0x00;
+    }
+    if (v > 0xFF) {
+        return 0xFF;
+    }
+    return v;
+}
+
 void gfxTextureColortransform(struct GfxTexture *texture, const MtxF *matrix) {
     if (texture->imFmt != G_IM_FMT_RGBA || texture->imSiz != G_IM_SIZ_32b) {
         return;
@@ -372,6 +382,7 @@ void gfxTextureColortransform(struct GfxTexture *texture, const MtxF *matrix) {
     };
     size_t texturePixels = texture->tileWidth * texture->tileHeight * texture->tilesX * texture->tilesY;
     struct RGBA32 *pixelData = texture->data;
+
     MtxF m = *matrix;
     for (size_t i = 0; i < texturePixels; ++i) {
         struct RGBA32 p = pixelData[i];
@@ -379,20 +390,7 @@ void gfxTextureColortransform(struct GfxTexture *texture, const MtxF *matrix) {
         f32 g = p.r * m.yx + p.g * m.yy + p.b * m.yz + p.a * m.yw;
         f32 b = p.r * m.zx + p.g * m.zy + p.b * m.zz + p.a * m.zw;
         f32 a = p.r * m.wx + p.g * m.wy + p.b * m.wz + p.a * m.ww;
-        struct RGBA32 n = {
-            r < 0x00   ? 0x00
-            : r > 0xFF ? 0xFF
-                       : r,
-            g < 0x00   ? 0x00
-            : g > 0xFF ? 0xFF
-                       : g,
-            b < 0x00   ? 0x00
-            : b > 0xFF ? 0xFF
-                       : b,
-            a < 0x00   ? 0x00
-            : a > 0xFF ? 0xFF
-                       : a,
-        };
+        struct RGBA32 n = {clampChannel(r), clampChannel(g), clampChannel(b), clampChannel(a)};
         pixelData[i] = n;
     }
 }
