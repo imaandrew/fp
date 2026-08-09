@@ -53,6 +53,7 @@ void gfxStart(void) {
     gfxDisp = malloc(GFX_DISP_SIZE);
     gfxDispW = malloc(GFX_DISP_SIZE);
     gfxDispP = gfxDisp;
+    // NOLINTNEXTLINE(bugprone-sizeof-expression,cert-arr39-c)
     gfxDispD = gfxDisp + (GFX_DISP_SIZE + sizeof(*gfxDisp) - 1) / sizeof(*gfxDisp);
 }
 
@@ -156,12 +157,14 @@ void gfxModeReplace(enum GfxMode mode, u64 value) {
 Gfx *gfxDispAppend(Gfx *disp, size_t size) {
     Gfx *p = gfxDispP;
     memcpy(gfxDispP, disp, size);
+    // NOLINTNEXTLINE(bugprone-sizeof-expression,cert-arr39-c)
     gfxDispP += (size + sizeof(*gfxDispP) - 1) / sizeof(*gfxDispP);
     gfxSynced = FALSE;
     return p;
 }
 
 void *gfxDataAppend(void *data, size_t size) {
+    // NOLINTNEXTLINE(bugprone-sizeof-expression,cert-arr39-c)
     gfxDispD -= (size + sizeof(*gfxDispD) - 1) / sizeof(*gfxDispD);
     memcpy(gfxDispD, data, size);
     return gfxDispD;
@@ -171,10 +174,11 @@ void gfxFlush(void) {
     flushChars();
     gSPEndDisplayList(gfxDispP++);
     gSPDisplayList(pm_gMainGfxPos++, gfxDisp);
-    Gfx *disp_w = gfxDispW;
+    Gfx *dispW = gfxDispW;
     gfxDispW = gfxDisp;
-    gfxDisp = disp_w;
+    gfxDisp = dispW;
     gfxDispP = gfxDisp;
+    // NOLINTNEXTLINE(bugprone-sizeof-expression,cert-arr39-c)
     gfxDispD = gfxDisp + (GFX_DISP_SIZE + sizeof(*gfxDisp) - 1) / sizeof(*gfxDisp);
     gfxSynced = FALSE;
 }

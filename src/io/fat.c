@@ -862,6 +862,7 @@ u32 fatAdvance(struct FatFile *file, u32 nByte, bool *eof) {
     /* advance sector and offset */
     pOff += nByte;
     file->pOff = pOff;
+    // NOLINTNEXTLINE(clang-analyzer-core.DivideZero) fatInit verifies nSectByte == 0x200
     file->pClustSect = nByte / fat->nSectByte;
     file->pSectOff = nByte % fat->nSectByte;
     /* ensure that the sector is within the cluster range */
@@ -1797,6 +1798,7 @@ s32 fatCreate(struct Fat *fat, struct FatEntry *dir, const char *path, u8 attrib
         }
         /* insert dot entries */
         s32 d = dirInsert(fat, clust, ".", t, 0, t, t, FAT_ATTRIB_DIRECTORY, clust, 0, NULL);
+        // NOLINTNEXTLINE(readability-suspicious-call-argument)
         s32 dd = dirInsert(fat, clust, "..", t, 0, t, t, FAT_ATTRIB_DIRECTORY, dirClust, 0, NULL);
         if (d || dd) {
             return -1;

@@ -131,7 +131,9 @@ static s32 activateProc(struct MenuItem *item) {
         data->item->text[3 + data->sigPrecis] = data->expSign->text[0];
         mul = 1;
         for (s32 i = data->expPrecis - 1; i >= 0; --i) {
-            s32 n = data->expDigits[i]->text[0];
+            // expDigits allocated with expPrecis elements
+            // NOLINTNEXTLINE(clang-analyzer-security.ArrayBound)
+            s32 n = (u8)data->expDigits[i]->text[0];
             exp += charToInt(n) * mul;
             mul *= 10;
             p[i] = n;
@@ -259,7 +261,11 @@ struct MenuItem *menuAddFloatinput(struct Menu *menu, s32 x, s32 y, s32 sigPreci
             data->expDigits[i - sigPrecis] = digit;
         }
     }
+    if (sigPrecis > 0) {
+        // sigDigits[0] initialized by first iteration of above loop
+        // NOLINTNEXTLINE(clang-analyzer-core.uninitialized.Assign)
     data->imenu->selector = data->sigDigits[0];
+    }
     return item;
 }
 

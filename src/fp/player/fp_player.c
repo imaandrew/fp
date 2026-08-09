@@ -383,8 +383,10 @@ static void createStarSpiritMenu(struct Menu *menu) {
     for (s32 i = 0; i < 7; i++) {
         ssX = baseX + (i % rowWidth) * spacingX;
         ssY = baseY + (i / rowWidth) * spacingY;
+        // NOLINTBEGIN(clang-analyzer-core.NullPointerArithm) data not treated as a pointer
         starSpirits[i] = menuAddSwitch(menu, ssX, ssY, texStarSpirits, i, 0, 0xFFFFFF, texStarSpirits, i, 1, 0xFFFFFF,
                                        scale, FALSE, starSpiritSwitchProc, (void *)i + 1);
+        // NOLINTEND(clang-analyzer-core.NullPointerArithm)
         starSpirits[i]->tooltip = strStarSpiritNames[i];
     }
     ssX = baseX + (7 % rowWidth) * spacingX;

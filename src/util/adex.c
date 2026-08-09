@@ -213,6 +213,7 @@ enum AdexError adexParse(struct Adex *adex, const char *str) {
             u32 v = 0;
             u32 m = 1;
             for (char *wordP = wordE - 1; wordP >= wordS; --wordP) {
+                // NOLINTNEXTLINE(clang-analyzer-security.ArrayBound) loop is bounded by wordP >= wordS
                 char c = *wordP;
                 s32 d = -1;
                 if (c >= '0' && c <= '9') {
@@ -437,6 +438,7 @@ enum AdexError adexEval(struct Adex *adex, u32 *result) {
                     }
                     value = ops[0] % ops[1];
                     break;
+                default: break;
             }
             /* pop operands */
             vector_erase(&stack, stack.size - ar, ar);

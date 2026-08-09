@@ -102,7 +102,7 @@ static void sdDatTx(s32 dat) {
 static void sdCmdRxBuf(void *buf, size_t size) {
     u8 *p = buf;
 
-    spiMode(SPI_CMD | SPI_RD | SPI_BYTE);
+    spiMode(SPI_CMD | SPI_RD | SPI_BYTE); // NOLINT(misc-redundant-expression)
 
     for (size_t i = 0; i < size; i++) {
         *p++ = spiRx();
@@ -132,7 +132,7 @@ static void sdDatRxBuf(void *buf, size_t size) {
 static void sdDatTxBuf(const void *buf, size_t size) {
     const u8 *p = buf;
 
-    spiMode(SPI_DAT | SPI_WR | SPI_BYTE);
+    spiMode(SPI_DAT | SPI_WR | SPI_BYTE); // NOLINT(misc-redundant-expression)
 
     for (size_t i = 0; i < size; i++) {
         spiTx(*p++);
@@ -143,7 +143,7 @@ static void sdDatTxClk(s32 dat, size_t nClk) {
     dat = dat & 0xF;
     dat = (dat << 4) | dat;
 
-    spiMode(SPI_DAT | SPI_WR | SPI_BYTE);
+    spiMode(SPI_DAT | SPI_WR | SPI_BYTE); // NOLINT(misc-redundant-expression)
 
     for (size_t i = 0; i < nClk / 2; i++) {
         spiTx(dat);

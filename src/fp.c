@@ -671,6 +671,8 @@ static void fpPauseDrawFrame(void) {
 
 /* ========================== HOOK ENTRY POINTS ========================== */
 
+// NOLINTBEGIN(misc-use-internal-linkage) functions calls inserted with genhooks
+
 ENTRY void fpUpdateEntry(void) {
     init_gp();
 
@@ -751,6 +753,8 @@ HOOK s32 fpIgnoreWalls(s32 mode, f32 startX, f32 startY, f32 startZ, f32 dirX, f
     return pm_player_raycast_general(mode, startX, startY, startZ, dirX, dirY, dirZ, hitX, hitY, hitZ, hitDepth, hitNx,
                                      hitNy, hitNz);
 }
+
+// NOLINTEND(misc-use-internal-linkage)
 
 #include <grc.c>
 #include <list/list.c>

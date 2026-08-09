@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 struct ItemData {
+    // NOLINTNEXTLINE(readability-identifier-naming) 'signed' is a keyword
     bool signed_;
     s32 base;
     s32 length;
@@ -85,7 +86,7 @@ static s32 activateProc(struct MenuItem *item) {
         u32 mul = 1;
         s32 sign = data->signed_ && data->digits[0]->text[0] == '-' ? -1 : 1;
         for (s32 i = data->length - 1; i >= 0; --i) {
-            s32 n = data->digits[i]->text[0];
+            s32 n = (u8)data->digits[i]->text[0];
             if (data->signed_ && i == 0) {
                 if (value == 0 && sign == -1) {
                     sign = 1;

@@ -29,6 +29,7 @@ struct MenuItem *menuAddUserwatch(struct Menu *menu, s32 x, s32 y, u32 address, 
     struct ItemData *data = malloc(sizeof(*data));
     data->address = menuAddIntinput(imenu, 0, 0, 16, 8, addressProc, data);
     menuIntinputSet(data->address, address);
+    // NOLINTBEGIN(bugprone-string-literal-with-embedded-nul)
     data->type = menuAddOption(imenu, 9, 0,
                                "u8\0"
                                "s8\0"
@@ -41,6 +42,7 @@ struct MenuItem *menuAddUserwatch(struct Menu *menu, s32 x, s32 y, u32 address, 
                                "x32\0"
                                "f32\0",
                                typeProc, data);
+    // NOLINTEND(bugprone-string-literal-with-embedded-nul)
     menuOptionSet(data->type, type);
     data->watch = menuAddWatch(imenu, 13, 0, address, type);
     item->data = data;

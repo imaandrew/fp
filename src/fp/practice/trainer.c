@@ -1073,6 +1073,7 @@ void createTrainerMenu(struct Menu *menu) {
     menuAddCheckbox(menu, xOffset, y++, menuByteCheckboxProc, &settings->trainerClippyEnabled);
 
     menuAddStatic(menu, 0, y, "spin", 0xC0C0C0);
+    // NOLINTNEXTLINE(clang-analyzer-deadcode.DeadStores) Reset on JP but not US
     struct MenuItem *lastOption = menuAddSubmenuIcon(menu, xOffset, y++, &spinMenu, wrench, 0, 0, 1.0F);
 #if PM64_VERSION == JP
     menuAddStatic(menu, 0, y, "ice staircase skip", 0xC0C0C0);
