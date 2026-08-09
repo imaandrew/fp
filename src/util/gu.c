@@ -11,7 +11,7 @@ void guMtxIdentF(MtxF *mf) {
 }
 
 void guPerspectiveF(MtxF *mf, u16 *perspNorm, f32 fovy, f32 aspect, f32 near, f32 far, f32 scale) {
-    f32 cot = cos(fovy / 2.F) / sin(fovy / 2.F);
+    f32 cot = cosf(fovy / 2.F) / sinf(fovy / 2.F);
     mf->xx = cot / aspect * scale;
     mf->xy = 0.F;
     mf->xz = 0.F;

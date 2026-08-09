@@ -264,7 +264,7 @@ struct MenuItem *menuAddFloatinput(struct Menu *menu, s32 x, s32 y, s32 sigPreci
     if (sigPrecis > 0) {
         // sigDigits[0] initialized by first iteration of above loop
         // NOLINTNEXTLINE(clang-analyzer-core.uninitialized.Assign)
-    data->imenu->selector = data->sigDigits[0];
+        data->imenu->selector = data->sigDigits[0];
     }
     return item;
 }
@@ -284,7 +284,7 @@ void menuFloatinputSet(struct MenuItem *item, f32 value) {
     s32 sigSign = signbit(value) ? -1 : 1;
     value = fabsf(value);
     s32 exp = value == 0.F ? 0.F : floorf(log10f(value));
-    s32 sig = value / pow(10., exp - (data->sigPrecis - 1)) + 0.5;
+    s32 sig = lround(value / pow(10., exp - (data->sigPrecis - 1)));
     s32 expSign = exp < 0 ? -1 : 1;
     exp *= expSign;
     char *p = data->item->text;
