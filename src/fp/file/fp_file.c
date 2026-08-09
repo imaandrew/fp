@@ -80,16 +80,18 @@ static s32 doExportFile(const char *path, void *data) {
     if (f != -1) {
         close(f);
     }
+
+    s32 saveSlot = 0;
     if (file) {
+        saveSlot = file->saveSlot;
         free(file);
     }
     if (errStr) {
         menuPrompt(fp.mainMenu, errStr, "return\0", 0, NULL, NULL);
         return 1;
-    } else {
-        fpLog("exported file %d to disk", file->saveSlot);
-        return 0;
     }
+    fpLog("exported file %d to disk", saveSlot);
+    return 0;
 }
 
 s32 fpImportFile(const char *path, void *data) {
@@ -146,12 +148,12 @@ s32 fpImportFile(const char *path, void *data) {
         menuPrompt(fp.mainMenu, errStr, "return\0", 0, NULL, NULL);
         return 1;
     }
-        if (fp.lastImportedSavePath == NULL) {
-            fp.lastImportedSavePath = malloc(PATH_MAX);
-        }
-        strcpy(fp.lastImportedSavePath, path);
-        fpLog("external save loaded");
-        return 0;
+    if (fp.lastImportedSavePath == NULL) {
+        fp.lastImportedSavePath = malloc(PATH_MAX);
+    }
+    strcpy(fp.lastImportedSavePath, path);
+    fpLog("external save loaded");
+    return 0;
 }
 
 static void exportFileProc(struct MenuItem *item, void *data) {
