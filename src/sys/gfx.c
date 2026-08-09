@@ -533,7 +533,7 @@ void gfxAddGrayscalePalette(struct GfxTexture *texture, s8 basePaletteIndex) {
         u8 pixelCount = ICON_PALETTE_SIZE / 2;
         for (u32 iPixel = 0; iPixel < pixelCount; iPixel++) {
             RGBA *oldPixel = &basePalette[iPixel];
-            RGBA *newPixel = &((RGBA *)newPalette)[iPixel];
+            RGBA *newPixel = &newPalette[iPixel];
 
             f32 lum = 0.2782F * oldPixel->r + 0.6562F * oldPixel->g + 0.0656F * oldPixel->b;
             u16 gray = (lum * 14 / 31) + 12;

@@ -105,7 +105,7 @@ static s32 activateProc(struct MenuItem *item) {
             if (i > 0) {
                 ++x;
             }
-            s32 n = data->sigDigits[i]->text[0];
+            s32 n = (u8)data->sigDigits[i]->text[0];
             sig += charToInt(n) * mul;
             mul *= 10;
             p[x] = n;

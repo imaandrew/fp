@@ -178,7 +178,7 @@ void createBossesMenu(struct Menu *menu) {
     menuInit(menu, MENU_NOVALUE, MENU_NOVALUE, MENU_NOVALUE);
     menu->selector = menuAddSubmenu(menu, 0, yMain++, NULL, "return");
 
-    s32 pageCount = 6;
+    u8 pageCount = 6;
     struct Menu *pages = malloc(sizeof(*pages) * ARRAY_LENGTH(pageList));
     struct MenuItem *tab = menuAddTab(menu, 0, yMain++, pages, pageCount);
     for (u8 pageIdx = 0; pageIdx < pageCount; ++pageIdx) {

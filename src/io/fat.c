@@ -273,7 +273,7 @@ static void unix2dos(time_t time, u16 *dosDate, u16 *dosTime) {
     time /= 24;
     time += 719468;
     s32 era = (time >= 0 ? time : time - 146096) / 146097;
-    s32 doe = time - era * 146097;
+    s32 doe = time - (time_t)(era * 146097);
     s32 yoe = (doe - doe / 1460 + doe / 36524 - doe / 146096) / 365;
     s32 y = yoe + era * 400;
     s32 doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
