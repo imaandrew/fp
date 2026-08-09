@@ -28,11 +28,11 @@ static s32 adjustJoystick(s32 v) {
         }
         return v + 7;
     }
-        if (v < 8) {
-            return 0;
+    if (v < 8) {
+        return 0;
     }
     if (v > 66) {
-            return 60;
+        return 60;
     }
     return v - 7;
 }
@@ -108,7 +108,8 @@ static void camBirdseye(void) {
     Vec3f vd;
     vec3fSub(&vd, &vt, &fp.cam.eye);
 
-    f32 pitch, yaw;
+    f32 pitch;
+    f32 yaw;
     vec3fPyangles(&vd, &pitch, &yaw);
 
     f32 dPitch = angleDif(pitch, fp.cam.pitch);

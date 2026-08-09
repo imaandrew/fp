@@ -214,7 +214,8 @@ static void fpDrawInputDisplay(struct GfxFont *font, s32 cellWidth, s32 cellHeig
     gfxModeSet(GFX_MODE_COLOR, GPACK_RGBA8888(0xC0, 0xC0, 0xC0, menuAlpha));
     if (settings->controlStick == 1 || settings->controlStick == 2) {
         s32 imageRange = controlStick->tileWidth / 2;
-        s32 imageDx, imageDy;
+        s32 imageDx;
+        s32 imageDy;
         if (dX > settings->controlStickRange) {
             imageDx = imageRange;
         } else if (dX < -settings->controlStickRange) {
