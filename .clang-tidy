@@ -12,15 +12,16 @@ Checks: >
   -bugprone-integer-division,
   -bugprone-multi-level-implicit-pointer-conversion,
   -bugprone-narrowing-conversions,
-  -bugprone-string-literal-with-embedded-nul,
   -bugprone-suspicious-include,
+
+  -cert-err33-c,
 
   -clang-analyzer-core.FixedAddressDereference,
   -clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling,
   -clang-analyzer-security.insecureAPI.strcpy,
 
   -misc-include-cleaner,
-  -misc-redundant-expression,
+  -misc-no-recursion,
   -misc-unused-parameters,
 
   -performance-no-int-to-ptr,
@@ -32,7 +33,6 @@ Checks: >
   -readability-magic-numbers,
   -readability-math-missing-parentheses,
   -readability-redundant-declaration,
-  -readability-suspicious-call-argument
 
 HeaderFilterRegex: "src/.*"
 CheckOptions:
@@ -51,12 +51,3 @@ CheckOptions:
       key: readability-identifier-naming.TypedefIgnoredRegexp,
       value: "((u|s|f)[0-9]+|bool)",
     }
-
-ExtraArgs:
-  [
-    "--target=mips-elf",
-    "-nostdinc",
-    "-isystem/opt/n64/lib/gcc/mips64-ultra-elf/16.1.0/include",
-    "-isystem/opt/n64/mips64-ultra-elf/include",
-    "-isystem/opt/n64/mips64-ultra-elf/n64-sysroot/usr/include",
-  ]
