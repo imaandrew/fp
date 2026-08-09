@@ -3,6 +3,6 @@
 #include "common.h"
 
 void crashScreenInit(void);
-void crashScreenSetDrawInfoCustom(u16 *frameBufPtr);
+void crashScreenSetDrawInfoCustom(const u16 *frameBufPtr);
 
 #endif

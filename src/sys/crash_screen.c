@@ -499,7 +499,7 @@ static void crashScreenThreadEntry(void *unused) {
     }
 }
 
-void crashScreenSetDrawInfoCustom(u16 *frameBufPtr) {
+void crashScreenSetDrawInfoCustom(const u16 *frameBufPtr) {
     gCrashScreen.frameBuf = (u16 *)MIPS_KSEG0_TO_KSEG1(frameBufPtr);
 }
 

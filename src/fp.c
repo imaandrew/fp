@@ -597,7 +597,7 @@ static struct {
     Gfx dl[2][PAUSE_DL_LENGTH];
 } pauseFrame;
 
-static void fpPauseBlit(const u16 *src, u16 *dst) {
+static void fpPauseBlit(const u16 *src, const u16 *dst) {
     gDPPipeSync(pm_gMainGfxPos++);
     gSPTexture(pm_gMainGfxPos++, -1, -1, 0, G_TX_RENDERTILE, G_ON);
     gDPSetScissor(pm_gMainGfxPos++, G_SC_NON_INTERLACE, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
