@@ -29,13 +29,12 @@
 //        malloc for printf (and may not be thread safe).
 //
 ///////////////////////////////////////////////////////////////////////////////
-
+// NOLINTBEGIN
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdio.h>
 
 #include "printf.h"
-
-// NOLINTBEGIN(readability-identifier-naming)
 
 // define this globally (e.g. gcc -DPRINTF_INCLUDE_CONFIG_H ...) to include the
 // printf_config.h header file
@@ -146,7 +145,7 @@ static inline void _out_char(char character, void *buffer, size_t idx, size_t ma
     (void)idx;
     (void)maxlen;
     if (character) {
-        _putchar(character);
+        putchar(character);
     }
 }
 
@@ -164,9 +163,8 @@ static inline void _out_fct(char character, void *buffer, size_t idx, size_t max
 // \return The length of the string (excluding the terminating 0) limited by 'maxsize'
 static inline unsigned int _strnlen_s(const char *str, size_t maxsize) {
     const char *s;
-    for (s = str; *s && maxsize--; ++s) {
+    for (s = str; *s && maxsize--; ++s)
         ;
-    }
     return (unsigned int)(s - str);
 }
 
@@ -330,16 +328,13 @@ static size_t _ftoa(out_fct_type out, char *buffer, size_t idx, size_t maxlen, d
     static const double pow10[] = {1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000};
 
     // test for special values
-    if (value != value) {
+    if (value != value)
         return _out_rev(out, buffer, idx, maxlen, "nan", 3, width, flags);
-    }
-    if (value < -DBL_MAX) {
+    if (value < -DBL_MAX)
         return _out_rev(out, buffer, idx, maxlen, "fni-", 4, width, flags);
-    }
-    if (value > DBL_MAX) {
+    if (value > DBL_MAX)
         return _out_rev(out, buffer, idx, maxlen, (flags & FLAGS_PLUS) ? "fni+" : "fni", (flags & FLAGS_PLUS) ? 4U : 3U,
                         width, flags);
-    }
 
     // test for very large values
     // standard printf behavior is to print EVERY whole number digit -- which could be 100s of characters overflowing
@@ -547,9 +542,8 @@ static size_t _etoa(out_fct_type out, char *buffer, size_t idx, size_t maxlen, d
                          FLAGS_ZEROPAD | FLAGS_PLUS);
         // might need to right-pad spaces
         if (flags & FLAGS_LEFT) {
-            while (idx - start_idx < width) {
+            while (idx - start_idx < width)
                 out(' ', buffer, idx++, maxlen);
-            }
         }
     }
     return idx;
@@ -757,9 +751,8 @@ static int _vsnprintf(out_fct_type out, char *buffer, const size_t maxlen, const
 #if defined(PRINTF_SUPPORT_FLOAT)
             case 'f':
             case 'F':
-                if (*format == 'F') {
+                if (*format == 'F')
                     flags |= FLAGS_UPPERCASE;
-                }
                 idx = _ftoa(out, buffer, idx, maxlen, va_arg(va, double), precision, width, flags);
                 format++;
                 break;
@@ -768,12 +761,10 @@ static int _vsnprintf(out_fct_type out, char *buffer, const size_t maxlen, const
             case 'E':
             case 'g':
             case 'G':
-                if ((*format == 'g') || (*format == 'G')) {
+                if ((*format == 'g') || (*format == 'G'))
                     flags |= FLAGS_ADAPT_EXP;
-                }
-                if ((*format == 'E') || (*format == 'G')) {
+                if ((*format == 'E') || (*format == 'G'))
                     flags |= FLAGS_UPPERCASE;
-                }
                 idx = _etoa(out, buffer, idx, maxlen, va_arg(va, double), precision, width, flags);
                 format++;
                 break;
@@ -907,4 +898,4 @@ int fctprintf(void (*out)(char character, void *arg), void *arg, const char *for
     va_end(va);
     return ret;
 }
-// NOLINTEND(readability-identifier-naming)
+// NOLINTEND

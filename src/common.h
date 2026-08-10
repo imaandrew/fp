@@ -4,5 +4,6 @@
 #include "macros.h"
 #include "pm64.h"
 #include "types.h"
+#include "util/printf.h"
 
 #endif // COMMON_H
