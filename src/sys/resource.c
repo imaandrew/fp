@@ -113,8 +113,8 @@ static s32 hudScriptToTexdesc(struct GfxTexdesc *tdOut, const u32 *hudScript, u3
     bool scriptDone = 0;
     while (!scriptDone) {
         switch (*scriptPos++) {
-            case HUD_ELEMENT_OP_End: scriptDone = TRUE; break;
-            case HUD_ELEMENT_OP_SetCI:
+            case HUD_ELEMENT_OP_END: scriptDone = TRUE; break;
+            case HUD_ELEMENT_OP_SET_CI:
                 if (address == UINT32_MAX) {
                     imFmt = G_IM_FMT_CI;
                     imSiz = G_IM_SIZ_4b;
@@ -125,7 +125,7 @@ static s32 hudScriptToTexdesc(struct GfxTexdesc *tdOut, const u32 *hudScript, u3
                     scriptPos += 3;
                 }
                 break;
-            case HUD_ELEMENT_OP_SetImage:
+            case HUD_ELEMENT_OP_SET_IMAGE:
                 if (address == UINT32_MAX) {
                     imFmt = G_IM_FMT_CI;
                     imSiz = G_IM_SIZ_4b;
@@ -136,11 +136,11 @@ static s32 hudScriptToTexdesc(struct GfxTexdesc *tdOut, const u32 *hudScript, u3
                     scriptPos += 5;
                 }
                 break;
-            case HUD_ELEMENT_OP_UseIA8:
+            case HUD_ELEMENT_OP_USE_I_A8:
                 imFmt = G_IM_FMT_IA;
                 imSiz = G_IM_SIZ_8b;
                 break;
-            case HUD_ELEMENT_OP_SetRGBA:
+            case HUD_ELEMENT_OP_SET_RGBA:
                 if (address == UINT32_MAX) {
                     scriptPos++;
                     address = *scriptPos++;
@@ -148,30 +148,30 @@ static s32 hudScriptToTexdesc(struct GfxTexdesc *tdOut, const u32 *hudScript, u3
                     scriptPos += 2;
                 }
                 break;
-            case HUD_ELEMENT_OP_SetTileSize:
+            case HUD_ELEMENT_OP_SET_TILE_SIZE:
                 tileSizePreset = *scriptPos++;
                 tileWidth = pm_gHudElementSizes[tileSizePreset].width;
                 tileHeight = pm_gHudElementSizes[tileSizePreset].height;
                 break;
-            case HUD_ELEMENT_OP_SetCustomSize:
+            case HUD_ELEMENT_OP_SET_CUSTOM_SIZE:
                 tileWidth = *scriptPos++;
                 tileHeight = *scriptPos++;
                 break;
-            case HUD_ELEMENT_OP_AddTexelOffsetX:
-            case HUD_ELEMENT_OP_AddTexelOffsetY:
-            case HUD_ELEMENT_OP_SetScale:
-            case HUD_ELEMENT_OP_SetAlpha:
-            case HUD_ELEMENT_OP_op_15:
-            case HUD_ELEMENT_OP_RandomBranch:
-            case HUD_ELEMENT_OP_SetFlags:
-            case HUD_ELEMENT_OP_ClearFlags:
-            case HUD_ELEMENT_OP_PlaySound: scriptPos++; break;
-            case HUD_ELEMENT_OP_SetTexelOffset:
-            case HUD_ELEMENT_OP_RandomDelay:
-            case HUD_ELEMENT_OP_RandomRestart:
-            case HUD_ELEMENT_OP_SetPivot: scriptPos += 2; break;
-            case HUD_ELEMENT_OP_SetSizesAutoScale:
-            case HUD_ELEMENT_OP_SetSizesFixedScale: scriptPos += 3; break;
+            case HUD_ELEMENT_OP_ADD_TEXEL_OFFSET_X:
+            case HUD_ELEMENT_OP_ADD_TEXEL_OFFSET_Y:
+            case HUD_ELEMENT_OP_SET_SCALE:
+            case HUD_ELEMENT_OP_SET_ALPHA:
+            case HUD_ELEMENT_OP_OP_15:
+            case HUD_ELEMENT_OP_RANDOM_BRANCH:
+            case HUD_ELEMENT_OP_SET_FLAGS:
+            case HUD_ELEMENT_OP_CLEAR_FLAGS:
+            case HUD_ELEMENT_OP_PLAY_SOUND: scriptPos++; break;
+            case HUD_ELEMENT_OP_SET_TEXEL_OFFSET:
+            case HUD_ELEMENT_OP_RANDOM_DELAY:
+            case HUD_ELEMENT_OP_RANDOM_RESTART:
+            case HUD_ELEMENT_OP_SET_PIVOT: scriptPos += 2; break;
+            case HUD_ELEMENT_OP_SET_SIZES_AUTO_SCALE:
+            case HUD_ELEMENT_OP_SET_SIZES_FIXED_SCALE: scriptPos += 3; break;
             default: break;
         }
     }
