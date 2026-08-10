@@ -3,6 +3,7 @@
 .vs/
 build/
 venv/
+wadextract/
 *.exe
 *.z64
 *.wad
@@ -10,4 +11,5 @@ venv/
 .ninja_*
 build.ninja
 CMakeLists.txt
+compile_commands.json
 romc
