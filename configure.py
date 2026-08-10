@@ -1,21 +1,83 @@
 #!/usr/bin/env python3
 
 import argparse
+import json
+import re
 import subprocess
+import sys
 from ninja_syntax import Writer
 from io import StringIO
 from pathlib import Path
 
+CLANG_TARGET = "--target=mips-elf"
+
 
 def run(cmd: str) -> str:
-    return subprocess.run(cmd, capture_output=True, shell=True, check=False).stdout.decode()
+    return subprocess.run(
+        cmd, capture_output=True, shell=True, check=False
+    ).stdout.decode()
+
+
+def get_cc_include_paths(cc: str) -> list[str]:
+    out = subprocess.run(
+        [cc, "-xc", "-E", "-Wp,-v", "/dev/null", "-o", "/dev/null"],
+        capture_output=True,
+        check=False,
+        text=True,
+    ).stderr
+    paths = re.search(
+        r"#include <\.\.\.> search starts here:\n(.*?)\nEnd of search list", out, re.S
+    )
+    if paths is None:
+        return []
+    return [line.strip() for line in paths.group(1).splitlines() if line.strip()]
+
+
+def write_compile_commands(cc: str) -> None:
+    compdb = subprocess.run(
+        ["ninja", "-t", "compdb", "cc"], capture_output=True, check=False, text=True
+    )
+    if compdb.returncode != 0:
+        sys.stderr.write("error: could not generate compile_commands.json\n")
+        return
+
+    extra = [CLANG_TARGET]
+    include_dirs = get_cc_include_paths(cc)
+    if include_dirs:
+        extra += ["-nostdinc"] + [f"-isystem{d}" for d in include_dirs]
+
+    db = json.loads(compdb.stdout)
+    for entry in db:
+        entry["command"] += " " + " ".join(extra)
+    with open("compile_commands.json", "w") as f:
+        json.dump(db, f, indent=2)
 
 
 parser = argparse.ArgumentParser(description="Creates an fp build script")
-parser.add_argument("--cflags", default=[], help="CFLAGS to be used for the build", action="append", nargs="+")
-parser.add_argument("--cppflags", default=[], help="CPPFLAGS to be used for the build", action="append", nargs="+")
-parser.add_argument("--ldflags", default=[], help="LDFLAGS to be used for the build", action="append", nargs="+")
-parser.add_argument("--version", type=str, help="fp version to be displayed on the title screen")
+parser.add_argument(
+    "--cflags",
+    default=[],
+    help="CFLAGS to be used for the build",
+    action="append",
+    nargs="+",
+)
+parser.add_argument(
+    "--cppflags",
+    default=[],
+    help="CPPFLAGS to be used for the build",
+    action="append",
+    nargs="+",
+)
+parser.add_argument(
+    "--ldflags",
+    default=[],
+    help="LDFLAGS to be used for the build",
+    action="append",
+    nargs="+",
+)
+parser.add_argument(
+    "--version", type=str, help="fp version to be displayed on the title screen"
+)
 parser.add_argument("--ndebug", action="store_true", help="Disables debug logging")
 
 args = parser.parse_args()
@@ -46,7 +108,9 @@ if args.version:
     FP_VERSION = args.version
 else:
     tag_commit = run("git rev-list --abbrev-commit --tags --max-count=1").rstrip()
-    tag = run(f"git describe --abbrev=0 --tags {tag_commit} 2>/dev/null || true").rstrip()
+    tag = run(
+        f"git describe --abbrev=0 --tags {tag_commit} 2>/dev/null || true"
+    ).rstrip()
     commit = run("git rev-parse --short HEAD").rstrip()
     date = run('git log -1 --format=%cd --date=format:"%m-%d-%y"').rstrip()
     FP_VERSION = f"{commit}-{date}"
@@ -55,7 +119,7 @@ else:
 
 FP_BIN_ADDRESS = "0x80400060"
 CFLAGS = f"-c -std=gnu11 -Wall -ffunction-sections -fdata-sections -O2 -fno-reorder-blocks -fdiagnostics-color -Isrc {' '.join([i for l in args.cflags for i in l])}"
-CPPFLAGS = f"-DURL=github.com/jcog/fp -DFP_VERSION={FP_VERSION} -DF3DEX_GBI_2 {' '.join([i for l in args.cppflags for i in l])}"
+CPPFLAGS = f'-DURL=\\"github.com/jcog/fp\\" -DFP_VERSION=\\"{FP_VERSION}\\" -DF3DEX_GBI_2 {' '.join([i for l in args.cppflags for i in l])}'
 LDFLAGS = f"-T gl-n64.ld -L{LIBDIR} -nostartfiles -specs=nosys.specs -Wl,--gc-sections {' '.join([i for l in args.ldflags for i in l])}"
 
 if args.ndebug:
@@ -94,17 +158,27 @@ n.rule(
 )
 
 # grc directly looks for an AS environment variable to check which mips command to use
-n.rule("grc", command=f"export AS=\"{MIPS}-as\"; $grc $in -d $resdesc -o $out", description="GRC $in")
+n.rule(
+    "grc",
+    command=f'export AS="{MIPS}-as"; $grc $in -d $resdesc -o $out',
+    description="GRC $in",
+)
 
 n.rule("as", command=f"$as {CPPFLAGS} $ldflags $in -o $out", description="AS $in")
 
-n.rule("objcopy", command="$objcopy -S -O binary $in $out", description="OBJCOPY $in -> $out")
+n.rule(
+    "objcopy",
+    command="$objcopy -S -O binary $in $out",
+    description="OBJCOPY $in -> $out",
+)
 
 n.rule("genhooks", command=f"$genhooks $in {MIPS} > $out", description="GENHOOKS $in")
 
 n.rule("sys_cc", command="gcc -O2 $in -o $out", description="GCC $in")
 
-n.rule("clean", command=f"rm -rf {BUILDDIR} fp-jp.z64 fp-us.z64 fp-US.wad fp-JP.wad romc")
+n.rule(
+    "clean", command=f"rm -rf {BUILDDIR} fp-jp.z64 fp-us.z64 fp-US.wad fp-JP.wad romc"
+)
 
 n.newline()
 
@@ -113,10 +187,17 @@ class CFile:
     def __init__(self, ver: str, path: str):
         self.cppflags = CPPFLAGS + " " + f"-DPM64_VERSION={ver.upper()}"
         self.path = path
-        self.o_path = path.replace(SRCDIR, f"{OBJDIR}/{ver.lower()}").replace(".c", ".o")
+        self.o_path = path.replace(SRCDIR, f"{OBJDIR}/{ver.lower()}").replace(
+            ".c", ".o"
+        )
 
     def build(self) -> None:
-        n.build(self.o_path, rule="cc", inputs=self.path, variables={"cppflags": self.cppflags})
+        n.build(
+            self.o_path,
+            rule="cc",
+            inputs=self.path,
+            variables={"cppflags": self.cppflags},
+        )
 
 
 class ResFile:
@@ -152,7 +233,9 @@ for ver in VERSIONS:
         variables={"libs": f"-lpm-{ver}", "map": f"{BUILDDIR}/fp-{ver}.map"},
     )
 
-    n.build(f"{HOOKSDIR}/{ver}/{HOOKS}", rule="genhooks", inputs=ELF, implicit="genhooks")
+    n.build(
+        f"{HOOKSDIR}/{ver}/{HOOKS}", rule="genhooks", inputs=ELF, implicit="genhooks"
+    )
 
     n.build(BIN, rule="objcopy", inputs=ELF, implicit=f"{HOOKSDIR}/{ver}/{HOOKS}")
 
@@ -170,3 +253,5 @@ n.build("romc", rule="sys_cc", inputs="romc.c")
 with open("build.ninja", "w") as f:
     f.write(outbuf.getvalue())
 n.close()
+
+write_compile_commands(CC)
