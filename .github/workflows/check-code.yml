@@ -11,21 +11,29 @@ jobs:
     name: Build Check
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v7
-    - name: Setup environment
-      uses: ./.github/actions/setup-build-env
-    - name: Test build
-      run: |
-        python3 configure.py
-        ninja us jp
-        python3 configure.py --cppflags='-DPAYLOAD=0x1c84d30 -DDMA_COPY=0x8002973c -DEND=0x01ccd110' --ldflags='-Wl,--defsym,start=0x8004ad7c'
-        ninja us_ldr jp_ldr
-  formatting-check:
-    name: Formatting Check
+      - uses: actions/checkout@v7
+      - name: Setup environment
+        uses: ./.github/actions/setup-build-env
+      - name: Test build
+        run: |
+          python3 configure.py
+          ninja us jp
+          python3 configure.py --cppflags='-DPAYLOAD=0x1c84d30 -DDMA_COPY=0x8002973c -DEND=0x01ccd110' --ldflags='-Wl,--defsym,start=0x8004ad7c'
+          ninja us_ldr jp_ldr
+  file-check:
+    name: File Check
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v7
-    - name: clang-format style check
-      uses: jidicula/clang-format-action@v4.18.0
-      with:
-        check-path: 'src'
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Setup environment
+        uses: ./.github/actions/setup-build-env
+      - name: Install clang-tidy
+        run: sudo apt-get install -y clang-tidy clang-format
+      - name: Generate compile database
+        run: |
+          python3 configure.py
+      - name: Run checks
+        run: |
+          python check.py --check
